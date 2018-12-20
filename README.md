@@ -46,7 +46,6 @@ Tunggu sampai file selesai di clone ke folder htdocs server Anda, lalu masuk ke 
 composer update --verbose --profile --prefer-dist
 php artisan key:generate
 ```
-Ubah file .env.example menjadi .env (jika tidak tampil di folder tixam, silahkan tampilkan file tersembunyi).
 
 Buka browser dan ketikan url http://localhost/phpmyadmin. Lalu buat database baru dengan nama <b>tixam</b>. Setelah itu ketikan script berikut pada command promt:
 ```
