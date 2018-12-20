@@ -14,15 +14,15 @@
   <div class="box box-primary">
     <div class="box-body box-profile">
       @if($siswa->gambar != '')
-        <img class="profile-user-img img-responsive img-rounded" src="{{ url('/assets/img/'.$siswa->gambar) }}" alt="User profile picture">
+        <img class="profile-user-img img-responsive img-rounded" src="{{ url('/assets/img/user/'.$siswa->gambar) }}" alt="User profile picture" style="width: 75%">
       @else
-        <img class="profile-user-img img-responsive img-rounded" src="{{ url('/assets/img/noimage.jpg') }}" alt="User profile picture">
+        <img class="profile-user-img img-responsive img-rounded" src="{{ url('/assets/img/siswa.png') }}" alt="User profile picture">
       @endif
       <p class="text-muted text-center">
         @if($siswa->status == 'G')
-        Guru
+          Guru
         @elseif($siswa->status == 'A')
-        Admin
+          Admin
         @endif
       </p>
 
@@ -57,15 +57,15 @@
           <td>:</td>
           <td>
             @if($siswa->jk == 'L')
-            Laki-laki
+              Laki-laki
             @else
-            Perempuan
+              Perempuan
             @endif
           </td>
         </tr>
       </table>
       <hr>
-      <a href="{{ url('/master/siswa/ubah/'.$siswa->id) }}" class="btn btn-primary btn-block"><b><i class="fa fa-edit"></i> Ubah</b></a>
+      <a href="{{ url('/master/siswa/edit/'.$siswa->id) }}" class="btn btn-primary btn-block"><b><i class="fa fa-edit"></i> Ubah</b></a>
     </div>
     <!-- /.box-body -->
   </div>
@@ -90,28 +90,28 @@
         <tbody>
 
           @if($hasil_ujians->count())
-          <?php $no = $hasil_ujians->firstItem(); ?>
-          @foreach($hasil_ujians as $hasil_ujian)
-          <tr>
-            <td>{{ $no++ }}</td>
-            <td>{{ $hasil_ujian->paket }}</td>
-            <td style="text-align: center;">{{ $hasil_ujian->jumlah_nilai }}</td>
-            <td style="text-align: center;">
-            <?php
-              $exp_date = explode(" ", $hasil_ujian->created_at);
-              $exp_date = explode("-", $exp_date[0]);
-              echo $exp_date[2].'-'.$exp_date[1].'-'.$exp_date[0];
-            ?>
-            </td>
-            <td style="text-align: center;">
-              <a href="{{ url('/elearning/laporan/'.$hasil_ujian->id_soal.'/'.$hasil_ujian->id_user) }}" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Lihat rincian soal dan jawaban siswa.">Detail</a>
-              <a href="" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Reset supaya siswa dapat melakukan ujian ulang dengan soal yang sama.">Reset</a>
-              <a href="" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Hapus hasil kerja siswa.">Hapus</a>
-            </td>
-          </tr>
-          @endforeach
+            <?php $no = $hasil_ujians->firstItem(); ?>
+            @foreach($hasil_ujians as $hasil_ujian)
+            <tr>
+              <td>{{ $no++ }}</td>
+              <td>{{ $hasil_ujian->paket }}</td>
+              <td style="text-align: center;">{{ $hasil_ujian->jumlah_nilai }}</td>
+              <td style="text-align: center;">
+              <?php
+                $exp_date = explode(" ", $hasil_ujian->created_at);
+                $exp_date = explode("-", $exp_date[0]);
+                echo $exp_date[2].'-'.$exp_date[1].'-'.$exp_date[0];
+              ?>
+              </td>
+              <td style="text-align: center;">
+                <a href="{{ url('/elearning/laporan/'.$hasil_ujian->id_soal.'/'.$hasil_ujian->id_user) }}" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Lihat rincian soal dan jawaban siswa.">Detail</a>
+                <a href="" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Reset supaya siswa dapat melakukan ujian ulang dengan soal yang sama.">Reset</a>
+                <a href="" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Hapus hasil kerja siswa.">Hapus</a>
+              </td>
+            </tr>
+            @endforeach
           @else
-          <tr><td colspan="5" class="alert alert-danger">Belum ada soal Anda yang dikerjakan.</td></tr>
+            <tr><td colspan="5" class="alert alert-danger">Belum ada soal Anda yang dikerjakan.</td></tr>
           @endif
         </tbody>
       </table>

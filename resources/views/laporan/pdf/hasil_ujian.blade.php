@@ -88,7 +88,7 @@
 <table>
 	<tr>
 		<td class="garis" style="width: 150px">Jumlah Soal</td>
-		<td class="garis" style="width: 250px">{{ $soals->count() }} soal</td>
+		<td class="garis" style="width: 250px">{{ $jumlah_soal }} soal</td>
 	</tr>
 	<tr>
 		<td class="garis">Soal Dijawab</td>

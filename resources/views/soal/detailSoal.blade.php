@@ -47,7 +47,16 @@
           <?php $pile = str_replace("<p>", "", $soal->pile); $pile = str_replace("</p>", "", $pile); echo $pile; ?>
         </label>
       </p>
+      <?php
+        if ($soal->status == 'Y') {
+          $status_soal = '<span class="label label-success">Tampil<span>';
+        }else{
+          $status_soal = '<span class="label label-danger">Tidak tampil</span>';
+        }
+      ?>
+      <p>Status soal {!! $status_soal !!}</p>
       <hr>
+      <a href="{{ url('elearning/soal/detail/'.$soal->id_soal) }}" class="btn btn-primary">Paket Soal</a>
       <button type="button" class="btn btn-danger" onclick="self.history.back()">Kembali</button>
       <a href="{{ url('/elearning/soal/detail/ubah/'.$soal->id) }}" class="btn btn-success">Ubah</a>
     </div>

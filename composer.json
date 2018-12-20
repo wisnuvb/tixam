@@ -12,8 +12,7 @@
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^2.1",
         "yajra/laravel-datatables-buttons": "^1.0",
-        "yajra/laravel-datatables-oracle": "^7.0",
-        "elasticsearch/elasticsearch": "~5.0"
+        "yajra/laravel-datatables-oracle": "^7.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

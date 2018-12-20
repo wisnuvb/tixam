@@ -23,14 +23,15 @@ class KelasController extends Controller
   {
     if(Auth::user()->status == 'G' or Auth::user()->status == 'A'){
     	$user = User::where('id', Auth::user()->id)->first();
-    	return view('kelas.index', compact('user'));
+      $gurus = User::whereIn('status', ['G', 'A'])->get();
+    	return view('kelas.index', compact('user', 'gurus'));
     }else{
       return redirect()->route('home.index');
     }
   }
   public function dataKelas()
   {
-  	$kelas = Kelas::get();
+  	$kelas = Kelas::with('siswa')->get();
   	if(Auth::user()->status == 'G'){
 	    return Datatables::of($kelas)
     										->addColumn('empty_str', function($kelas) {
@@ -39,6 +40,22 @@ class KelasController extends Controller
 					              ->addColumn('action', function ($kelas) {
 					                return '<div style="text-align:center"><a href="kelas/detail/'.$kelas->id.'" class="btn btn-xs btn-success">Detail</a></div>';
 					              })
+                        ->addColumn('siswa', function ($kelas) {
+                          if ($kelas) {
+                            $siswa = User::where('status', 'S')->where('id_kelas', $kelas->id)->count();
+                            return '<center>'.$siswa.' siswa</center>';
+                          }else{
+                            return '<center>kelas kosong</center>';
+                          }
+                        })
+                        ->addColumn('wali', function ($kelas) {
+                          if ($kelas->wali) {
+                            return '<center>'.$kelas->wali->nama.'</center>';
+                          }else{
+                            return '<center><label class="label label-danger">tidak ada</label></center>';
+                          }
+                        })
+                        ->rawColumns(['action', 'siswa', 'wali'])
 					              ->make(true);
 		}else{
 			return Datatables::of($kelas)
@@ -46,8 +63,28 @@ class KelasController extends Controller
     											return '';
     										})
 					              ->addColumn('action', function ($kelas) {
-					                return '<div style="text-align:center"><a href="" class="btn btn-xs btn-primary">Ubah</a> <a href="" class="btn btn-xs btn-danger">Hapus</a> <a href="kelas/detail/'.$kelas->id.'" class="btn btn-xs btn-success">Detail</a></div>';
+					                return '<div style="text-align:center">
+                            <a href="kelas/ubah/'.$kelas->id.'" class="btn btn-xs btn-primary">Ubah</a>
+                            <button type="button" class="btn btn-xs btn-danger del-kelas" id='.$kelas->id.'>Hapus</button>
+                            <a href="kelas/detail/'.$kelas->id.'" class="btn btn-xs btn-success">Detail</a>
+                          </div>';
 					              })
+                        ->addColumn('siswa', function ($kelas) {
+                          if ($kelas) {
+                            $siswa = User::where('status', 'S')->where('id_kelas', $kelas->id)->count();
+                            return '<center>'.$siswa.' siswa</center>';
+                          }else{
+                            return '<center>kelas kosong</center>';
+                          }
+                        })
+                        ->addColumn('wali', function ($kelas) {
+                          if ($kelas->wali) {
+                            return '<center>'.$kelas->wali->nama.'</center>';
+                          }else{
+                            return '<center><label class="label label-danger">tidak ada</label></center>';
+                          }
+                        })
+                        ->rawColumns(['action', 'siswa', 'wali'])
 					              ->make(true);
 		}
   }
@@ -58,6 +95,17 @@ class KelasController extends Controller
       $kelas = Kelas::where('id', $request->id)->first();
       $jumlah = User::select('id')->where('status_sekolah', 'Y')->where('id_kelas', $request->id)->count();
       return view('kelas.detail', compact('user', 'kelas', 'jumlah'));
+    }else{
+      return redirect()->route('home.index');
+    }
+  }
+  public function ubahKelas($id)
+  {
+    if(Auth::user()->status == 'G' or Auth::user()->status == 'A'){
+      $user = User::where('id', Auth::user()->id)->first();
+      $kelas = Kelas::where('id', $id)->first();
+      $gurus = User::whereIn('status', ['G', 'A'])->get();
+      return view('kelas.form.ubah', compact('user', 'kelas', 'gurus'));
     }else{
       return redirect()->route('home.index');
     }

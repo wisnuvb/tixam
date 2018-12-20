@@ -125,46 +125,46 @@
 </div>
 @endsection
 @push('css')
-<link rel="stylesheet" href="{{URL::asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}">
-<link rel="stylesheet" href="{{URL::asset('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.css')}}">
-<link rel="stylesheet" href="{{URL::asset('assets/plugins/datatables/extensions/FixedHeader/css/fixedHeader.bootstrap.css')}}">
-<style type="text/css">
-  .panel {
-    margin-bottom: 5px !important;
-  }
-  .form-group {
-    margin-bottom: 5px;
-  }
-  .inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-  }
-  .inputfile + label {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: green;
-    display: inline-block;
-    padding: 10px;
-  }
-  .inputfile:focus + label,.inputfile + label:hover {
-    background-color: darkgreen;
-  }
-  .inputfile + label {
-    cursor: pointer;
-  }
-  .inputfile:focus + label {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-  .inputfile + label * {
-    pointer-events: none;
-  }
-</style>
+  <link rel="stylesheet" href="{{URL::asset('assets/plugins/datatables/media/css/dataTables.bootstrap.css')}}">
+  <link rel="stylesheet" href="{{URL::asset('assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.css')}}">
+  <link rel="stylesheet" href="{{URL::asset('assets/plugins/datatables/extensions/FixedHeader/css/fixedHeader.bootstrap.css')}}">
+  <style type="text/css">
+    .panel {
+      margin-bottom: 5px !important;
+    }
+    .form-group {
+      margin-bottom: 5px;
+    }
+    .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    .inputfile + label {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: white;
+      background-color: green;
+      display: inline-block;
+      padding: 10px;
+    }
+    .inputfile:focus + label,.inputfile + label:hover {
+      background-color: darkgreen;
+    }
+    .inputfile + label {
+      cursor: pointer;
+    }
+    .inputfile:focus + label {
+      outline: 1px dotted #000;
+      outline: -webkit-focus-ring-color auto 5px;
+    }
+    .inputfile + label * {
+      pointer-events: none;
+    }
+  </style>
 @endpush
 @push('scripts')
 <script src="{{URL::asset('assets/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>

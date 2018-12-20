@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Datatables;
 use DB;
+use Hash;
 
 use App\User;
 use App\Models\Soal;
@@ -21,19 +22,20 @@ class SiswaController extends Controller
 {
   public function __construct()
   {
-	$this->middleware('auth');
+  	$this->middleware('auth');
   }
 
   public function index()
   {
     if(Auth::user()->status == 'G' or Auth::user()->status == 'A'){
     	$user = User::where('id', Auth::user()->id)->first();
-    	return view('siswa.index', compact('user'));
+      $kelas = Kelas::get();
+    	return view('siswa.index', compact('user', 'kelas'));
     }else{
       return redirect()->route('home.index');
     }
   }
-  public function ubahSiswa(Request $request)
+  public function editSiswa(Request $request)
   {
     if(Auth::user()->status == 'G' or Auth::user()->status == 'A'){
       $user = User::where('id', Auth::user()->id)->first();
@@ -93,8 +95,13 @@ class SiswaController extends Controller
                             }
                           })
                           ->addColumn('action', function ($siswas) {
-                            return '<div style="text-align:center"><a href="" class="btn btn-xs btn-primary">Ubah</a> <a href="" class="btn btn-xs btn-danger">Hapus</a> <a href="siswa/detail/'.$siswas->id.'" class="btn btn-xs btn-success">Detail</a></div>';
+                            return '<div style="text-align:center">
+                              <a href="siswa/edit/'.$siswas->id.'" class="btn btn-xs btn-primary">Ubah</a>
+                              <button type="button" class="btn btn-xs btn-danger del-siswa" id="'.$siswas->id.'">Hapus</button>
+                              <a href="siswa/detail/'.$siswas->id.'" class="btn btn-xs btn-success">Detail</a>
+                            </div>';
                           })
+                          ->rawColumns(['action'])
                           ->make(true);
     }
   }
@@ -167,5 +174,83 @@ class SiswaController extends Controller
     }else{
       return redirect()->route('home.index');
     }
+  }
+  public function getSoal($id)
+  {
+    $soal = Detailsoal::find($id);
+    return view('halaman-siswa.get_soal', compact('soal'));
+  }
+  public function jawab(Request $request)
+  {
+    $get_jawab = explode('/', $request->get_jawab);
+    $pilihan = $get_jawab[0];
+    $id_detail_soal = $get_jawab[1];
+    $id_siswa = $get_jawab[2];
+    $detail_soal = Detailsoal::find($id_detail_soal);
+
+    $jawab = Jawab::where('no_soal_id', $id_detail_soal)->where('id_user', Auth::user()->id)->first();
+    if (!$jawab) {
+      $jawab = new Jawab;
+      $jawab->revisi = 0;
+    }else{
+      $jawab->revisi = $jawab->revisi + 1;
+    }
+    
+    $jawab->no_soal_id = $id_detail_soal;
+    $jawab->id_soal = $detail_soal->id_soal;
+    $jawab->id_user = Auth::user()->id;
+    $jawab->id_kelas = Auth::user()->id_kelas;
+    $jawab->nama = Auth::user()->nama;
+    $jawab->pilihan = $pilihan;
+
+    $check_jawaban = Detailsoal::where('id', $id_detail_soal)->where('kunci', $pilihan)->first();
+    if ($check_jawaban) {
+      $jawab->score = $detail_soal->score;
+    }else{
+      $jawab->score = 0;
+    }
+    $jawab->status = 0;
+    $jawab->save();
+    return 1;
+  }
+
+  public function kirimJawaban(Request $request)
+  {
+    Jawab::where('id_soal', $request->id_soal)->where('id_user', Auth::user()->id)->update(['status' => 1]);
+  }
+
+  public function finishUjian($id)
+  {
+    $soal = Soal::find($id);
+    $nilai = Jawab::where('id_soal', $id)->where('id_user', Auth::user()->id)->sum('score');
+    return view('halaman-siswa.finish', compact('soal', 'nilai'));
+  }
+
+  public function delete()
+  {
+    return view('siswa.delete');
+  }
+
+  public function getBtnDelete($password)
+  {
+    $validate_admin = User::where('email', Auth::user()->email)->first();
+    if ($validate_admin && Hash::check($password, $validate_admin->password)) {
+      $cocok = 'Y';
+    }else{
+      $cocok = 'N';
+    }
+    return view('siswa.tombol_hapus', compact('cocok'));
+  }
+
+  public function deleteAll()
+  {
+    $users = User::where('status', 'S')->get();
+    foreach ($users as $key => $value) {
+      $jawab = Jawab::where('id_user', $value->id)->first();
+      if ($jawab) {
+        $jawab->delete();
+      }
+    }
+    User::where('status', 'S')->delete();
   }
 }

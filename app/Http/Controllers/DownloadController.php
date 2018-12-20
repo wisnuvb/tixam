@@ -24,5 +24,19 @@ class DownloadController extends Controller
         exit( 'Requested file does not exist on our server!' );
       }
   	}
+    if ($filename == "siswa") {
+      $file = public_path(). "/file/siswa.xls";
+      $headers = array(
+        'Content-Type' => 'application/csv',
+        'Content-Disposition' => 'attachment; filename=' . $filename,
+      );
+      if ( file_exists( $file ) ) {
+        // Send Download
+        return Response::download($file, 'format_siswa.xls', $headers);
+      } else {
+        // Error
+        exit( 'Requested file does not exist on our server!' );
+      }
+    }
   }
 }

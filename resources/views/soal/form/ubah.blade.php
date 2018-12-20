@@ -28,7 +28,7 @@
                 <input type="hidden" name="id" value="{{ $soal->id }}">
                 <input type="hidden" name="id_soal" value="{{ $soal->id_soal }}">
                 <input type="hidden" name="jenis" value="@if($soal->jenis != ''){{ $soal->jenis }}@else 1 @endif">
-                <input type="hidden" name="sesi" value="@if($soal->sesi != ''){{ $soal->sesi }}@else{{ md5(rand(0000000000, 9999999999)) }}@endif">
+                <input type="hidden" name="sesi" value="@if($soal->sesi != ''){{ $soal->sesi }}@else{{ md5(rand(0000000000, mt_getrandmax())) }}@endif">
                 <textarea class="form-control textarea" name="soal" placeholder="Soal">{{ $soal->soal }}</textarea>
               </div>
             </div>
@@ -168,6 +168,7 @@ $(document).ready(function (){
         $("#wrap-btn").show();
         if (data == 'ok') {
           $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
+          window.location.href = "{{ url('elearning/soal/detail/data-soal/'.$soal->id) }}";
         }else{
           $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();
         }

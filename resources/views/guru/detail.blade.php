@@ -20,9 +20,9 @@
       @endif
       <p class="text-muted text-center">
         @if($guru->status == 'G')
-        Guru
+          Guru
         @elseif($guru->status == 'A')
-        Admin
+          Admin
         @endif
       </p>
 
@@ -55,7 +55,9 @@
         </tr>
       </table>
       <hr>
-      <a href="{{ url('/master/guru/ubah/'.$guru->id) }}" class="btn btn-primary btn-block"><b><i class="fa fa-edit"></i> Ubah</b></a>
+      @if($guru->status == 'A' || $guru->id == Auth::user()->id)
+        <a href="{{ url('/master/guru/ubah/'.$guru->id) }}" class="btn btn-primary btn-block"><b><i class="fa fa-edit"></i> Ubah</b></a>
+      @endif
     </div>
     <!-- /.box-body -->
   </div>

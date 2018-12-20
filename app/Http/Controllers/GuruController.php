@@ -49,7 +49,7 @@ class GuruController extends Controller
                           }else{
                             return '<div style="text-align:center">
                               <a href="guru/ubah/'.$gurus->id.'" class="btn btn-xs btn-primary">Ubah</a>
-                              <button type="button" class="btn btn-xs btn-danger">Hapus</button>
+                              <button type="button" class="btn btn-xs btn-danger del-guru" id='.$gurus->id.'>Hapus</button>
                               <a href="guru/detail/'.$gurus->id.'" class="btn btn-xs btn-success">Detail</a></div>';
                           }
 					              })

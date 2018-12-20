@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Input;
 use Auth;
 use Image;
+use Excel;
 
 use App\User;
 use App\Models\Materi;
 use App\Models\Distribusisoal;
 use App\Models\School;
+use App\Models\Kelas;
+use App\Models\Aktifitas;
 
 class CrudController extends Controller
 {
@@ -169,9 +172,9 @@ class CrudController extends Controller
     $query->nama = $request->nama;
     $query->alamat = $request->alamat;
     $query->motto = $request->motto;
-    $query->kab_kot = $request->kab_kot;
-    $query->nama_kepsek = $request->nama_kepsek;
-    $query->nip_kepsek = $request->nip_kepsek;
+    // $query->kab_kot = $request->kab_kot;
+    // $query->nama_kepsek = $request->nama_kepsek;
+    // $query->nip_kepsek = $request->nip_kepsek;
     $query->save();
     if ($jenis == 'nama') {
       return $request->nama;
@@ -179,12 +182,6 @@ class CrudController extends Controller
       return $request->alamat;
     }elseif ($jenis == 'motto') {
       return $request->motto;
-    }elseif ($jenis == 'kab_kot') {
-      return $request->kab_kot;
-    }elseif ($jenis == 'nama_kepsek') {
-      return $request->nama_kepsek;
-    }elseif ($jenis == 'nip_kepsek') {
-      return $request->nip_kepsek;
     }else{
       return 'Something hes error.';
     }
@@ -267,5 +264,145 @@ class CrudController extends Controller
     $query->email = $request->email;
     $query->save();
     return 'ok';
+  }
+
+  public function simpanKelas(Request $request)
+  {
+    if (!$request->nama) {
+      return 'Nama kelas tidak boleh kosong';
+    }
+    if ($request->id == 'N') {
+      $query = new Kelas;
+    }else{
+      $query = Kelas::find($request->id);
+    }
+    $query->id_wali = $request->id_wali;
+    $query->nama = $request->nama;
+    if ($query->save()) {
+      return 1;
+    }
+  }
+
+  public function deleteKelas(Request $request)
+  {
+    User::where('id_kelas', $request->id_kelas)->update(['id_kelas' => '']);
+    Kelas::find($request->id_kelas)->delete();
+    return 1;
+  }
+
+  public function deleteGuru(Request $request)
+  {
+    User::where('id', $request->id_guru)->delete();
+    return 1;
+  }
+
+  public function deleteSiswa(Request $request)
+  {
+    User::where('id', $request->id_siswa)->delete();
+    return 1;
+  }
+
+  public function simpanSiswa(Request $request)
+  {
+    if($request->nama == ""){
+      return "<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama tidak boleh kosong.";
+    }elseif($request->id_kelas == ""){
+      return "<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Kelas tidak boleh kosong.";
+    }elseif($request->no_induk == ""){
+      return "<i class='fa fa-exclamation-circle' aria-hidden='true'></i> NIS tidak boleh kosong.";
+    }elseif ($request->jk == "") {
+      return "<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Jenis kelamin tidak boleh kosong.";
+    }elseif ($request->email == "") {
+      return "<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email tidak boleh kosong.";
+    }elseif(!filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+      return "<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email tidak valid.";
+    }
+
+    $query = new User;
+    $query->id_kelas = $request->id_kelas;
+    $query->nama = $request->nama;
+    $query->no_induk = $request->no_induk;
+    $query->nisn = $request->nisn;
+    $query->jk = $request->jk;
+    $query->status = 'S';
+    $query->status_sekolah = 'Y';
+    $query->email = $request->email;
+    $query->password = bcrypt(123456);
+    $query->save();
+    return 1;
+  }
+
+  public function updateImgSiswa(Request $request)
+  {
+    $file_upload_url_img = trim(addslashes($_FILES['upload_url_img']['name']));
+    $ext = pathinfo($file_upload_url_img, PATHINFO_EXTENSION);
+    $save_url_img = Auth::user()->id . '_' . uniqid() . '.'. $ext;
+    $img_url_img = Image::make($_FILES['upload_url_img']['tmp_name']);
+    $img_url_img->resize(650, null, function ($constraint) { $constraint->aspectRatio(); });
+    if (!file_exists('assets/img/user/')) {
+      mkdir('assets/img/user/', 0777, true);
+    }
+    if ($img_url_img->save('assets/img/user/'.$save_url_img)) {
+      $query = User::findorfail($request->id);
+      if (file_exists(app_path("assets/img/user/".$query->gambar))) {
+        unlink("assets/img/user/".$query->gambar);
+      }
+      $query->gambar = $save_url_img;
+      if ($query->save()) {
+        return 1;
+      }
+    }
+  }
+
+  public function simpanSiswaViaExcel(Request $request)
+  {
+    $baris = 1; $sukses = 0; $gagal = 0; $kesalahan = '';
+    if ($request->hasFile('file')) {
+      $path = $request->file('file')->getRealPath();
+      $data = Excel::load($request->file('file'), function($reader) {})->get();
+      foreach ($data as $key=>$value) {
+        // foreach ($data_arr as $key=>$value) {
+          $jumlah = $key;
+          if (!$value->nama_lengkap) {
+            $kesalahan .= '<br>- Nama Siswa kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
+            return view('siswa.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+          }
+          if (!$value->no_induk) {
+            $kesalahan .= '<br>- No Induk/NIS kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
+            return view('siswa.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+          }
+          if (!$value->jenis_kelamin) {
+            $kesalahan .= '<br>- Jenis kelamin siswa kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
+            return view('siswa.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+          }
+          $cek_user = User::where('no_induk', $value->no_induk)->first();
+          if (!$cek_user) {
+            $query = new User;
+            $query->id_kelas = $value->id_kelas;
+            $query->nama = $value->nama_lengkap;
+            $query->no_induk = $value->no_induk;
+            $query->nisn = $value->nisn;
+            $query->jk = $value->jenis_kelamin;
+            $query->status = 'S';
+            $query->status_sekolah = 'Y';
+            $query->email = trim(strtolower($value->no_induk)).'@ayosinau.com';
+            $query->password = bcrypt(123456);
+            if ($query->save()) {
+              $sukses = $sukses + 1;
+            }
+          }
+        // }
+      }
+      if ($sukses > $jumlah) {
+        $sukses == $jumlah;
+      }
+      $aktifitas = new Aktifitas;
+      $aktifitas->id_user = Auth::user()->id;
+      $aktifitas->nama = 'Mengupload data siswa via Excel. Jumlah data '.$jumlah.', sukses diupload sebanyak: '.$sukses.' dan gagal diupload sebanyak: '.$gagal;
+      $aktifitas->save();
+      return view('siswa.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+    }else{
+      return redirect()->route('siswa');
+    }
   }
 }

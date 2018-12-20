@@ -20,4 +20,12 @@ class Kelas extends Model
   {
   	return $this->belongsTo('App\Models\Kelas', 'id_kelas');
   }
+  public function wali()
+  {
+    return $this->belongsTo('App\User', 'id_wali');
+  }
+  public function siswa()
+  {
+    return $this->hasMany('App\User', 'id', 'id_kelas');
+  }
 }

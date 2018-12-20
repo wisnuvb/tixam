@@ -3,12 +3,12 @@
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::get('/', ['as'	=> 'home.index','uses'	=> 'HomeController@index']);
-Route::get('/home', ['as'	=> 'home','uses'	=> 'HomeController@index']);
+Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'elearning'], function(){
 	Route::group(['prefix' => 'soal'], function(){
-		Route::get('ubah/{id}', ['as'		=> 'soal.ubah','uses'	=> 'SoalController@ubahSoal']);
+		Route::get('ubah/{id}', 'SoalController@ubahSoal')->name('soal.ubah');
 	});
 });
 
@@ -25,52 +25,63 @@ Route::group(['prefix' => 'crud'], function(){
 	Route::post('simpan-gambar-user', 'CrudController@simpanGambarUser');
 	Route::post('update-profil-sekolah', 'CrudController@updateProfilSekolah');
 	Route::post('simpan-guru', 'CrudController@simpanGuru');
+	Route::post('simpan-siswa', 'CrudController@simpanSiswa');
 	Route::post('update-siswa', 'CrudController@updateSiswa');
+	Route::post('simpan-siswa-via-excel', 'CrudController@simpanSiswaViaExcel');
+	Route::post('update-img-siswa', 'CrudController@updateImgSiswa');
+	Route::post('delete-siswa', 'CrudController@deleteSiswa');
 	Route::post('update-guru', 'CrudController@updateGuru');
+	Route::post('delete-guru', 'CrudController@deleteGuru');
+	Route::post('simpan-kelas', 'CrudController@simpanKelas');
+	Route::post('delete-kelas', 'CrudController@deleteKelas');
 });
 
 Route::group(['prefix' => 'pengaturan'], function(){
-	Route::get('/', ['as'		=> 'pengaturan','uses'	=> 'HomeController@pengaturan']);
+	Route::get('/', 'HomeController@pengaturan')->name('pengaturan');
 });
 
 Route::group(['prefix' => 'master'], function(){
 	// route master guru
 	Route::group(['prefix'=>'guru'], function(){
-		Route::get('/', ['as'		=> 'master.guru','uses'	=> 'GuruController@index']);
+		Route::get('/', 'GuruController@index')->name('master.guru');
 		Route::get('data-guru', 'GuruController@dataGuru')->name('master.data_guru');
 		Route::get('detail/{id}', 'GuruController@detailGuru');
 		Route::get('ubah/{id}', 'GuruController@ubahGuru');
 	});
 	// route master kelas
-	Route::get('kelas', ['as'	=> 'master.kelas','uses'	=> 'KelasController@index']);
-	Route::get('data-kelas', ['as'	=> 'master.data_kelas','uses'	=> 'KelasController@dataKelas']);
-	Route::get('kelas/detail/{id}', ['as'		=> 'master.detail_kelas','uses'	=> 'KelasController@detailKelas']);
-	Route::get('detail-kelas/', ['as'		=> 'master.detail_kelas_siswa','uses'	=> 'KelasController@detailKelasSiswa']);
+	Route::get('kelas', 'KelasController@index')->name('master.kelas');
+	Route::get('data-kelas', 'KelasController@dataKelas')->name('master.data_kelas');
+	Route::get('kelas/detail/{id}', 'KelasController@detailKelas')->name('master.detail_kelas');
+	Route::get('detail-kelas/', 'KelasController@detailKelasSiswa')->name('master.detail_kelas_siswa');
+	Route::get('kelas/ubah/{id}', 'KelasController@ubahKelas')->name('master.ubah_kelas');
 	// route master siswa
 	Route::group(['prefix'=>'siswa'], function(){
-		Route::get('/', 'SiswaController@index');
+		Route::get('/', 'SiswaController@index')->name('siswa');
 		Route::get('data-siswa', 'SiswaController@dataSiswa')->name('master.data_siswa');
 		Route::get('detail/{id}', 'SiswaController@detailSiswa');
-		Route::get('ubah/{id}', 'SiswaController@ubahSiswa');
+		Route::get('edit/{id}', 'SiswaController@editSiswa');
+		Route::get('delete', 'SiswaController@delete');
+		Route::get('get-btn-delete/{password}', 'SiswaController@getBtnDelete');
+		Route::get('delete-all', 'SiswaController@deleteAll');
 	});
 
 });
 
 Route::group(['prefix' => 'elearning'], function() {
 	Route::group(['prefix' => 'materi'], function() {
-		Route::get('/', ['as' => 'elearning.materi', 'uses' => 'MateriController@index']);
-		Route::get('/get-materi-guru', ['as' => 'elearning.dataMateriGuru', 'uses' => 'MateriController@dataMateriGuru']);
-		Route::get('/detail/{id}', ['as' => 'elearning.detailMateri', 'uses' => 'MateriController@detail']);
-		Route::get('/ubah/{id}', ['as' => 'elearning.detailMateri', 'uses' => 'MateriController@ubah']);
+		Route::get('/', 'MateriController@index')->name('elearning.materi');
+		Route::get('/get-materi-guru', 'MateriController@dataMateriGuru')->name('elearning.dataMateriGuru');
+		Route::get('/detail/{id}', 'MateriController@detail')->name('elearning.detailMateri');
+		Route::get('/ubah/{id}', 'MateriController@ubah')->name('elearning.detailMateri');
 	});
 	Route::group(['prefix' => 'laporan'], function() {
-		Route::get('/', ['as' => 'elearning.laporan', 'uses' => 'LaporanController@index']);
-		Route::get('/detail-kelas/{id}', ['as' => 'elearning.laporan', 'uses' => 'LaporanController@detailKelas']);
-		Route::get('data-paket-soal', ['as' => 'elearning.laporan.data_paket_soal', 'uses' => 'LaporanController@data_paket_soal']);
+		Route::get('/', 'LaporanController@index')->name('elearning.laporan');
+		Route::get('/detail-kelas/{id}', 'LaporanController@detailKelas')->name('elearning.laporan');
+		Route::get('data-paket-soal', 'LaporanController@data_paket_soal')->name('elearning.laporan.data_paket_soal');
 		Route::get('detail-kelas/{id_kelas}/paket-soal/{id_soal}', 'LaporanController@detailPaketSoalPerKelas');
-		Route::get('data-kelas-paket-soal', ['as' => 'elearning.laporan.data_kelas_paket_soal', 'uses' => 'LaporanController@dataKelasPaketSoal']);
-		Route::get('{id_soal}/{id_user}', ['as' => 'elearning.detailLaporanSiswa', 'uses' => 'LaporanController@detailLaporanSiswa']);
-		Route::get('hasil-siswa', ['as' => 'elearning.hasilSiswa', 'uses' => 'LaporanController@hasilSiswa']);
+		Route::get('data-kelas-paket-soal', 'LaporanController@dataKelasPaketSoal')->name('elearning.laporan.data_kelas_paket_soal');
+		Route::get('{id_soal}/{id_user}', 'LaporanController@detailLaporanSiswa')->name('elearning.detailLaporanSiswa');
+		Route::get('hasil-siswa', 'LaporanController@hasilSiswa')->name('elearning.hasilSiswa');
 	});
 	Route::group(['prefix' => 'soal'], function() {
 		Route::get('/', 'SoalController@index')->name('soal');
@@ -84,8 +95,8 @@ Route::group(['prefix' => 'elearning'], function() {
 });
 Route::get('/download-file-format/{filename}', 'DownloadController@download')->name('download');
 Route::group(['prefix' => 'cetak'], function() {
-	Route::get('/kartu-ujian', 'SoalController@index')->name('soal');
-	Route::get('/berita-acara', 'SoalController@index')->name('soal');
+	Route::get('/kartu-ujian', 'ErrorHandleController@e404')->name('soal');
+	Route::get('/berita-acara', 'ErrorHandleController@e404')->name('soal');
 	Route::get('/excel/hasil-ujian-perkelas/{soal}/{kelas}', 'LaporanController@excelHasilUjianPerkelas');
 	Route::get('/pdf/hasil-ujian-persiswa/{siswa}/{soal}', 'LaporanController@pdfHasilUjianPersiswa');
 });
@@ -97,7 +108,8 @@ Route::group(['prefix'=>'siswa'], function() {
 	Route::get('materi', 'SiswaController@materi');
 	Route::get('ujian', 'SiswaController@ujian');
 	Route::get('ujian/detail/{id}', 'SiswaController@detailUjian');
+	Route::get('ujian/finish/{id}', 'SiswaController@finishUjian');
+	Route::get('ujian/get-soal/{id}', 'SiswaController@getSoal');
+	Route::post('ujian/jawab', 'SiswaController@jawab');
+	Route::post('ujian/kirim-jawaban', 'SiswaController@kirimJawaban');
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');

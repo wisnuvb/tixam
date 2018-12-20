@@ -67,7 +67,7 @@ $("html").on("contextmenu",function(){
 		fsElement = document.getElementById('specialstuff'),
 		fsStatus = document.getElementById('fsstatus');
 	if (window.fullScreenApi.supportsFullScreen) {
-		fsStatus.innerHTML = '<i class="fa fa-check-square"></i> Browser anda bisa buat ujian';
+		fsStatus.innerHTML = '<i class="fa fa-check-square"></i> Browser anda support buat ujian ini';
 		fsStatus.className = 'fullScreenSupported';
 		
 		// handle button click

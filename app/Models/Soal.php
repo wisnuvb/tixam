@@ -14,4 +14,8 @@ class Soal extends Model
   {
     return $this->belongsTo('App\User', 'id_user');
   }
+  public function detailSoal()
+  {
+    return $this->hasMany('App\Models\Detailsoal', 'id_soal');
+  }
 }

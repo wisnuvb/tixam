@@ -115,6 +115,7 @@ $(document).ready(function(){
           $("#loading").hide();
           $("#wrap-btn").show();
           $("#notif").removeClass('alert alert-danger').addClass('alert alert-info').html("<i class='fa fa-info-circle'></i> Data berhasil disimpan.").fadeIn(350);
+          window.location.href = "{{ url('elearning/soal/detail/'.$soal->id) }}";
         }else{
           $("#loading").hide();
           $("#wrap-btn").show();

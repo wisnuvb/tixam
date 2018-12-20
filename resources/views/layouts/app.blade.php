@@ -21,13 +21,13 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ url('/assets/plugins/iCheck/flat/blue.css') }}">
   <!-- Morris chart -->
-  <link rel="stylesheet" href="{{ url('/assets/plugins/morris/morris.css') }}">
+  <!-- <link rel="stylesheet" href="{{ url('/assets/plugins/morris/morris.css') }}"> -->
   <!-- jvectormap -->
-  <link rel="stylesheet" href="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}">
+  <!-- <link rel="stylesheet" href="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}"> -->
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{ url('/assets/plugins/datepicker/datepicker3.css') }}">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{ url('/assets/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- <link rel="stylesheet" href="{{ url('/assets/plugins/daterangepicker/daterangepicker.css') }}"> -->
   <!-- bootstrap Sweetalert -->
   <link rel="stylesheet" href="{{ url('/assets/plugins/sweetalert-master/dist/sweetalert.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url('/assets/plugins/sweetalert-master/themes/facebook/facebook.css') }}">
@@ -63,8 +63,7 @@
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <div class="wrapper">
   <?php
-    use App\User;
-    $user = User::where('id', Auth::user()->id)->first();
+    $user = App\User::findorfail(Auth::user()->id);
   ?>
   <header class="main-header">
     <!-- Logo -->
@@ -181,7 +180,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                @if(Auth::user()->gambar != "")
+                @if(Auth::user()->gambar)
                   <img src="{{ url('/assets/img/user/'.Auth::user()->gambar) }}" class="img-circle" alt="User Image">
                 @else
                   <img src="{{ url('/assets/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
@@ -193,7 +192,7 @@
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <li class="user-body hidden">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -314,7 +313,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.0
     </div>
-    <strong>Copyright &copy; 2016-{{ date('Y') }} <a href="http://tipa.co.id">Tipamedia</a>.</strong> All rights
+    <strong>Copyright &copy; 2016-{{ date('Y') }} <a href="http://tipa.co.id" target="_blank">Tipamedia</a>.</strong> All rights
     reserved.
   </footer>
 </div>
@@ -341,7 +340,7 @@
 <!-- jQuery Knob Chart -->
 <!-- <script src="{{ url('/assets/plugins/knob/jquery.knob.js') }}"></script> -->
 <!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="{{ url('/assets/dist/js/moment.min.js') }}"></script>
 <script src="{{ url('/assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ url('/assets/plugins/datepicker/bootstrap-datepicker.js') }}"></script>

@@ -53,7 +53,7 @@
 		    		<tr>
 		    			<td>Status ujian</td>
 		    			<td>
-		    				@if($hasil_ujian->status == 'Y')
+		    				@if($hasil_ujian->status == 1)
 			    			<label class="label label-info">Selesai</label>
 			    			@else
 			    			<label class="label label-warning">Sedang berlangsung</label>

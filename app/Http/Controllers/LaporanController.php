@@ -96,7 +96,7 @@ class LaporanController extends Controller
                           }
                         })
                         ->addColumn('jumlah_nilai', function($jawabs) {
-                          return $jumlah_nilai;
+                          return $jawabs->jumlah_nilai;
                         })
                         ->addColumn('action', function($jawabs) {
                           return '<div style="text-align:center"><a href="../../../'.$jawabs->id_soal.'/'.$jawabs->id_user.'" class="btn btn-primary btn-xs">Detail</a></div>';
@@ -110,7 +110,9 @@ class LaporanController extends Controller
       $siswa = User::where('id', $request->id_user)->first();
       $soal = Soal::select('paket', 'id')->where('id', $request->id_soal)->first();
       $hasil_ujian = Jawab::select(DB::raw('SUM(jawabs.score) as jumlah_nilai'), 'jawabs.created_at', 'jawabs.status')
-                            ->where('jawabs.id_user', $request->id_user)->where('jawabs.id_soal', $request->id_soal)->first();
+                            ->where('jawabs.id_user', $request->id_user)
+                            ->where('jawabs.id_soal', $request->id_soal)
+                            ->first();
       return view('laporan.detailSiswa', compact('user', 'siswa', 'hasil_ujian', 'soal'));
 	  }else{
 	  	return redirect()->route('home.index');
@@ -146,6 +148,9 @@ class LaporanController extends Controller
     $detailSoal = Detailsoal::where('id_soal', $request->soal)->get();
     $jawabs = Jawab::where('id_soal', $request->soal)->where('id_kelas', $request->kelas)
                       ->groupBy('id_user')->get();
+
+    // return view('laporan.excel.excel_hasil_ujian_perkelas', compact('jawabs', 'soal', 'kelas', 'detailSoal'));
+
     Excel::create('Nilai Kelas '.$kelas->nama, function($excel) use ($jawabs, $soal, $kelas, $detailSoal) {
       $excel->sheet('New sheet', function($sheet) use ($jawabs, $soal, $kelas, $detailSoal) {
         $sheet->setStyle(array(
@@ -160,18 +165,19 @@ class LaporanController extends Controller
   public function pdfHasilUjianPersiswa(Request $request)
   {
     $siswa = User::where('id', $request->siswa)->first();
-    $soals = Detailsoal::where('id_soal', $request->soal)->where('status', 'Y')->get();
-    $jawabs = Jawab::where('id_soal', $request->soal)->where('id_user', $request->siswa)->where('status', 'Y')->get();
-    $jawabBenar = Jawab::where('id_soal', $request->soal)->where('id_user', $request->siswa)->where('status', 'Y')->where('score', '!=', '0')->get();
+    $jumlah_soal = Detailsoal::where('id_soal', $request->soal)->count();
+    $soals = Detailsoal::where('id_soal', $request->soal)->where('status', 1)->get();
+    $jawabs = Jawab::where('id_soal', $request->soal)->where('id_user', $request->siswa)->where('status', 1)->get();
+    $jawabBenar = Jawab::where('id_soal', $request->soal)->where('id_user', $request->siswa)->where('status', 1)->where('score', '!=', '0')->get();
     $jawab_first = Jawab::where('id_soal', $request->soal)
                                   ->where('id_user', $request->siswa)
-                                  ->where('status', 'Y')->first();
+                                  ->where('status', 1)->first();
     $jumlah_jawaban_benar = Jawab::where('id_soal', $request->soal)
                                   ->where('id_user', $request->siswa)
-                                  ->where('status', 'Y')
+                                  ->where('status', 1)
                                   ->select(DB::raw('sum(jawabs.score) as jumlahNilai'))
                                   ->first();
-    $pdf = PDF::loadView('laporan.pdf.hasil_ujian', compact('jawabs', 'siswa', 'soals', 'jawabBenar', 'jumlah_jawaban_benar', 'jawab_first'));
+    $pdf = PDF::loadView('laporan.pdf.hasil_ujian', compact('jawabs', 'siswa', 'soals', 'jawabBenar', 'jumlah_jawaban_benar', 'jawab_first', 'jumlah_soal'));
     return $pdf->setPaper('legal')->stream('hasil ujian.pdf');
   }
 }

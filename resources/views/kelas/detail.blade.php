@@ -14,6 +14,11 @@
   <div class="box box-primary">
   	<div class="box-header with-border">
       <h3 class="box-title">{{ $kelas->nama }}</h3>
+      <div class="pull-right">
+        <a href="{{ url('master/kelas/ubah/'.$kelas->id) }}" class="btn btn-success" id="btn-create"><i class="fa fa-edit"></i> Tambah Siswa</a>
+        <a href="{{ url('master/kelas/ubah/'.$kelas->id) }}" class="btn btn-primary" id="btn-create"><i class="fa fa-edit"></i> Ubah Kelas</a>
+        <button type="button" class="btn btn-danger" id="btn-siswa"><i class="fa fa-trash"></i> Kosongkan Kelas</button>
+      </div>
     </div>
     <div class="box-body">
     	<table class="table table-hover table-condensed" id="table_detail_kelas">
@@ -48,7 +53,7 @@
 	    	</tr>
 	    	<tr>
 	    		<td>Wali</td>
-	    		<td>{{ $kelas->wali }}</td>
+	    		<td>{{ $kelas->wali->nama }}</td>
 	    	</tr>
 	    </table>
     </div>

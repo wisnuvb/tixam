@@ -75,7 +75,7 @@ class SoalController extends Controller
     }
     return Datatables::of($soals)
                         ->editColumn('waktu', function($soals) {
-                          return $soals->waktu.' menit';
+                          return '<center>'.$soals->waktu.' menit</center>';
                         })
                         ->editColumn('jenis', function($soals) {
                           if($soals->jenis == 1){
@@ -90,7 +90,7 @@ class SoalController extends Controller
                         ->addColumn('action', function($soals) {
                           return '<div style="text-align:center"><a href="elearning/soal/ubah/'.$soals->id.'" class="btn btn-success btn-xs">Ubah</a> <a href="elearning/soal/detail/'.$soals->id.'" class="btn btn-primary btn-xs">Detail</a></div>';
                         })
-                        ->rawColumns(['jenis', 'action', 'kkm'])->make(true);
+                        ->rawColumns(['waktu', 'jenis', 'action', 'kkm'])->make(true);
   }
   public function detail(Request $request)
   {
@@ -115,15 +115,21 @@ class SoalController extends Controller
     return Datatables::of($soals)
                         ->editColumn('status', function($soals){
                           if ($soals->status == 'Y') {
-                            return "<span class='label label-success'>Tampil</span>";
+                            return "<center><span class='label label-success'>Tampil</span></center>";
                           }else{
-                            return "<span class='label label-danger'>Tidak tampil</span>";
+                            return "<center><span class='label label-danger'>Tidak tampil</span></center>";
                           }
+                        })
+                        ->editColumn('kunci', function($soals){
+                          return '<center>'.$soals->kunci.'</center>';
+                        })
+                        ->editColumn('score', function($soals){
+                          return '<center>'.$soals->score.'</center>';
                         })
                         ->addColumn('action', function($soals) {
                           return '<div style="text-align:center"><a href="ubah/'.$soals->id.'" class="btn btn-success btn-xs">Ubah</a> <a href="data-soal/'.$soals->id.'" class="btn btn-primary btn-xs">Detail</a></div>';
                         })
-                        ->rawColumns(['soal', 'action', 'status'])
+                        ->rawColumns(['soal', 'kunci', 'score', 'action', 'status'])
                         ->make(true);
   }
 
@@ -230,77 +236,45 @@ class SoalController extends Controller
       return redirect()->route('home.index');
     }
   }
-  /*public function simpanDetailSoalExcel(Request $request)
-  {
-    $sesi = md5(rand(0000000000, 9999999999));
-    require app_path()."/functions/excel_reader.php";
-    $data = new Spreadsheet_Excel_Reader($_FILES['file']['tmp_name']);
-    $baris = $data->rowcount($sheet_index = 0);
-    for ($i=2; $i <= $baris; $i++){
-      $id_soal = $data->val($i, 1);
-      $soal = $data->val($i, 2);
-      $pila = $data->val($i, 3);
-      $pilb = $data->val($i, 4);
-      $pilc = $data->val($i, 5);
-      $pild = $data->val($i, 6);
-      $pile = $data->val($i, 7);
-      $kunci = $data->val($i, 8);
-      $score = str_replace(",", ".", $data->val($i, 9));
-      $query = new Detailsoal;
-      $query->id_soal = $id_soal;
-      $query->soal = $soal;
-      $query->pila = $pila;
-      $query->pilb = $pilb;
-      $query->pilc = $pilc;
-      $query->pild = $pild;
-      $query->pile = $pile;
-      $query->kunci = $kunci;
-      $query->score = $score;
-      $query->id_user = Auth::user()->id;
-      $query->status = 'Y';
-      $query->sesi = $sesi;
-      $query->save();
-    }
-  }*/
+
   public function simpanDetailSoalExcel(Request $request)
   {
-    $sesi = md5(rand(0000000000, 9999999999));
+    $sesi = md5(rand(0000000000, mt_getrandmax()));
     $baris = 1; $sukses = 0; $gagal = 0; $kesalahan = '';
     if ($request->hasFile('file')) {
       $path = $request->file('file')->getRealPath();
       $data = Excel::load($request->file('file'), function($reader) {})->get();
-      // dd($data);
-      $jumlah = $data->count();
       foreach ($data as $data_arr) {
-        foreach ($data_arr as $value) {
+        foreach ($data_arr as $key=>$value) {
+          $jumlah = $key;
           if ($value->id_soal == '') {
             if ($kesalahan) {
               $kesalahan = $kesalahan.'<br>- Kode soal kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }else{
               $kesalahan = $kesalahan.'- Kode soal kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }
-            return view('warga.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+            return view('soal.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
           }elseif ($value->soal == '') {
             if ($kesalahan) {
               $kesalahan = $kesalahan.'<br>- Soal kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }else{
               $kesalahan = $kesalahan.'- Soal kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }
-            return view('warga.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+            return view('soal.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
           }elseif ($value->kunci_jawaban == '') {
             if ($kesalahan) {
               $kesalahan = $kesalahan.'<br>- Pilihan jawaban kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }else{
               $kesalahan = $kesalahan.'- Pilihan jawaban kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }
-            return view('warga.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+            return view('soal.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
           }elseif ($value->score == '') {
             if ($kesalahan) {
               $kesalahan = $kesalahan.'<br>- Score kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }else{
               $kesalahan = $kesalahan.'- Score kosong pada baris <b>'.$baris.'</b>, proses upload dihentikan. Silahkan cek file Excel Anda lalu upload kembali.';
             }
-            return view('warga.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
+            return view('soal.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
           }
           $query = new Detailsoal;
           $query->id_soal = $value->id_soal;
@@ -315,9 +289,13 @@ class SoalController extends Controller
           $query->id_user = Auth::user()->id;
           $query->status = 'Y';
           $query->sesi = $sesi;
-          $query->save();
-          $sukses = $sukses + 1;
+          if ($query->save()) {
+            $sukses = $sukses + 1;
+          }
         }
+      }
+      if ($sukses > $jumlah) {
+        $sukses == $jumlah;
       }
       $aktifitas = new Aktifitas;
       $aktifitas->id_user = Auth::user()->id;
@@ -325,7 +303,7 @@ class SoalController extends Controller
       $aktifitas->save();
       return view('soal.hasil_upload_via_excel', compact('sukses', 'gagal', 'jumlah', 'kesalahan'));
     }else{
-      return redirect()->route('home.index');
+      return redirect()->route('soal');
     }
   }
 }
