@@ -46,6 +46,7 @@ Tunggu sampai file selesai di clone ke folder htdocs server Anda, lalu masuk ke 
 composer update --verbose --profile --prefer-dist
 php artisan key:generate
 ```
+Ubah file .env.example menjadi .env (jika tidak tampil di folder tixam, silahkan tampilkan file tersembunyi).
 
 Buka browser dan ketikan url http://localhost/phpmyadmin. Lalu buat database baru dengan nama <b>tixam</b>. Setelah itu ketikan script berikut pada command promt:
 ```
@@ -55,7 +56,7 @@ composer db:seed
 
 Setelah proses diatas berhasil dilalui tanpa hambatan, silahkan akses di browser url http://localhost/tixam/public untuk mengakses aplikasi ujian.
 
-Untuk login sebagai guru silahkan gunakan email: guru@tipa.co.id, password: 123456
+Untuk login sebagai guru silahkan gunakan email: admin@ayosinau.com, password: secret
 
 ## Info Tambahan
 
