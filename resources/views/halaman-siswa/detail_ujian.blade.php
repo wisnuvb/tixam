@@ -208,6 +208,12 @@
 @push('css')
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" /> -->
 <style>
+	.dijawab {
+		background: #1980d4;
+		color: #fff;
+		padding: 5px 10px;
+    border-radius: 3px;
+	}
 	.pagination>li>a, .pagination>li>span {
 		width: 38px;
     text-align: center;
@@ -338,8 +344,8 @@
 			var paket_soal = $this.attr('soal-id');
 			$('#nav'+id_soal).find('a').css({"background-color": "#1980d4", "color": "#fff"});
 			// console.log(id_soal);
-			$(".jawab").css({"background-color": "#fff", "padding": "0","border-radius": "0"});
-			$this.css({"background-color": "#e2eff1", "padding": "10px","border-radius": "5px"});
+			$(".jawab").css({"background-color": "#fff", "color": "#000", "padding": "0","border-radius": "0"});
+			$this.css({"background-color": "#1980d4", "color": "#fff", "padding": "5px 10px", "border-radius": "3px"});
 			
 			$.ajax({
 				type: "POST",
