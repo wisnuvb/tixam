@@ -29,8 +29,9 @@
   <!-- Daterange picker -->
   <!-- <link rel="stylesheet" href="{{ url('/assets/plugins/daterangepicker/daterangepicker.css') }}"> -->
   <!-- bootstrap Sweetalert -->
-  <link rel="stylesheet" href="{{ url('/assets/plugins/sweetalert-master/dist/sweetalert.css') }}">
+  <!-- <link rel="stylesheet" href="{{ url('/assets/plugins/sweetalert-master/dist/sweetalert.css') }}"> -->
   <link rel="stylesheet" type="text/css" href="{{ url('/assets/plugins/sweetalert-master/themes/facebook/facebook.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url('assets/plugins/sweetalert2-1.0.5/dist/sweetalert2.min.css') }}">
   <link rel="icon" href="{{ url('/assets/img/favicon.jpg') }}" type="image/x-icon"/>
   <style type="text/css">
     .dataTable td{
@@ -335,8 +336,8 @@
 <!-- Sparkline -->
 <!-- <script src="{{ url('/assets/plugins/sparkline/jquery.sparkline.min.js') }}"></script> -->
 <!-- jvectormap -->
-<script src="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
-<script src="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+<!-- <script src="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script> -->
+<!-- <script src="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script> -->
 <!-- jQuery Knob Chart -->
 <!-- <script src="{{ url('/assets/plugins/knob/jquery.knob.js') }}"></script> -->
 <!-- daterangepicker -->
@@ -345,7 +346,8 @@
 <!-- datepicker -->
 <script src="{{ url('/assets/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <!-- Bootstrap Sweetalert -->
-<script src="{{ url('/assets/plugins/sweetalert-master/dist/sweetalert.min.js') }}"></script>
+<!-- <script src="{{ url('/assets/plugins/sweetalert-master/dist/sweetalert.min.js') }}"></script> -->
+<script src="{{ url('assets/plugins/sweetalert2-1.0.5/dist/sweetalert2.min.js') }}"></script>
 <!-- Slimscroll -->
 <script src="{{ url('/assets/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->

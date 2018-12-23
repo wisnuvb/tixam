@@ -34,6 +34,7 @@ Route::group(['prefix' => 'crud'], function(){
 	Route::post('delete-guru', 'CrudController@deleteGuru');
 	Route::post('simpan-kelas', 'CrudController@simpanKelas');
 	Route::post('delete-kelas', 'CrudController@deleteKelas');
+	Route::post('reset-ujian', 'CrudController@resetUjian');
 });
 
 Route::group(['prefix' => 'pengaturan'], function(){

@@ -105,8 +105,7 @@
               </td>
               <td style="text-align: center;">
                 <a href="{{ url('/elearning/laporan/'.$hasil_ujian->id_soal.'/'.$hasil_ujian->id_user) }}" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Lihat rincian soal dan jawaban siswa.">Detail</a>
-                <a href="" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Reset supaya siswa dapat melakukan ujian ulang dengan soal yang sama.">Reset</a>
-                <a href="" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Hapus hasil kerja siswa.">Hapus</a>
+                <button type="button" id="btn-reset" data-id="{{ $hasil_ujian->id }}" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Reset supaya siswa dapat melakukan ujian ulang dengan soal yang sama.">Reset</button>
               </td>
             </tr>
             @endforeach
@@ -120,5 +119,36 @@
 </div>
 @endsection
 @push('scripts')
-<script type="text/javascript" src="{{ url('node_modules/moment/moment.js') }}"></script>
+  <script type="text/javascript" src="{{ url('node_modules/moment/moment.js') }}"></script>
+  <script>
+    $(document).ready(function() {
+      $('#btn-reset').on('click', function() {
+        var id_ujian = $(this).attr('data-id');
+        var $this = $(this);
+        swal({
+          title: 'Yakin akan direset?',
+          text: "Data yang telah direset tidak bisa dikembalikan.",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, reset!'
+        }).then(function () {
+          $.ajax({
+            type: 'POST',
+            url: "{{ url('crud/reset-ujian') }}",
+            data: {id_ujian:id_ujian},
+            success: function(data) {
+              console.log(data);
+              swal(
+                'Berhasil!',
+                'Data ujian berhasil direset.',
+                'success'
+              )
+            }
+          })
+        })
+      });
+    });
+  </script>
 @endpush

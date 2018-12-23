@@ -20,37 +20,24 @@
 		    <div class="row">
 		    	@if($pakets->count())
 			    	@foreach($pakets as $paket_soal)
+			    		<?php
+			    			$check = App\Models\Jawab::where('id_soal', $paket_soal->id_soal)->where('id_user', Auth::user()->id)->first();
+			    		?>
 				    	<div class="col-sm-4">
-				    		@if($paket_soal->jawabUser)
-				    			@if($paket_soal->jawabUser->status == 1)
-				    				<a href="{{ url('siswa/ujian/finish/'.$paket_soal->id_soal) }}">
-							    		<div class="info-box bg-yellow">
-						            <span class="info-box-icon"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
-						            <div class="info-box-content">
-						              <span class="info-box-text">{{ $paket_soal->soal->paket }}</span>
-						              <div class="progress">
-						                <div class="progress-bar" style="width: 100%"></div>
-						              </div>
-					                <span class="progress-description">{{ $paket_soal->soal->deskripsi }}</span>
-					                <span>Kamu sudah menyelesaikan ujian ini.</span>
-						            </div>
-						          </div>
-							    	</a>
-				    			@else
-				    				<a href="{{ url('siswa/ujian/detail/'.$paket_soal->id_soal) }}">
-							    		<div class="info-box bg-green">
-						            <span class="info-box-icon"><i class="fa fa-check-square-o"></i></span>
-						            <div class="info-box-content">
-						              <span class="info-box-text">{{ $paket_soal->soal->paket }}</span>
-						              <!-- <span class="info-box-number"></span> -->
-						              <div class="progress">
-						                <div class="progress-bar" style="width: 100%"></div>
-						              </div>
-					                <span class="progress-description">{{ $paket_soal->soal->deskripsi }}</span>
-						            </div>
-						          </div>
-							    	</a>
-				    			@endif
+				    		@if($check)
+			    				<a href="{{ url('siswa/ujian/finish/'.$paket_soal->id_soal) }}">
+						    		<div class="info-box bg-yellow">
+					            <span class="info-box-icon"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+					            <div class="info-box-content">
+					              <span class="info-box-text">{{ $paket_soal->soal->paket }}</span>
+					              <div class="progress">
+					                <div class="progress-bar" style="width: 100%"></div>
+					              </div>
+				                <span class="progress-description">{{ $paket_soal->soal->deskripsi }}</span>
+				                <span>Kamu sudah menyelesaikan ujian ini.</span>
+					            </div>
+					          </div>
+						    	</a>
 				    		@else
 				    			<a href="{{ url('siswa/ujian/detail/'.$paket_soal->id_soal) }}">
 						    		<div class="info-box bg-green">

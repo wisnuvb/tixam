@@ -54,9 +54,9 @@
 		    			<td>Status ujian</td>
 		    			<td>
 		    				@if($hasil_ujian->status == 1)
-			    			<label class="label label-info">Selesai</label>
+				    			<label class="label label-info">Selesai</label>
 			    			@else
-			    			<label class="label label-warning">Sedang berlangsung</label>
+				    			<label class="label label-warning">Sedang berlangsung</label>
 			    			@endif
 		    			</td>
 		    		</tr>
@@ -65,7 +65,9 @@
 		    			<td>{{ $hasil_ujian->jumlah_nilai }}</td>
 		    		</tr>
 		    	</table>
-		    	<a target="_blank" href="{{ url('/cetak/pdf/hasil-ujian-persiswa/'.$siswa->id.'/'.$soal->id) }}" class="btn btn-warning btn-md" data-toggle='tooltip' title="Cetak laporan hasil ujian paket soal {{ $soal->paket }} untuk siswa an. {{ $siswa->nama }}"><i class="fa fa-file-pdf-o"></i> Cetak Laporan</a>
+  				@if($hasil_ujian->status == 1)
+			    	<a target="_blank" href="{{ url('/cetak/pdf/hasil-ujian-persiswa/'.$siswa->id.'/'.$soal->id) }}" class="btn btn-warning btn-md" data-toggle='tooltip' title="Cetak laporan hasil ujian paket soal {{ $soal->paket }} untuk siswa an. {{ $siswa->nama }}"><i class="fa fa-file-pdf-o"></i> Cetak Laporan</a>
+		    	@endif
     		</div>
     	</div>
     	<hr>

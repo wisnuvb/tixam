@@ -15,6 +15,7 @@ use App\Models\Distribusisoal;
 use App\Models\School;
 use App\Models\Kelas;
 use App\Models\Aktifitas;
+use App\Models\Jawab;
 
 class CrudController extends Controller
 {
@@ -404,5 +405,19 @@ class CrudController extends Controller
     }else{
       return redirect()->route('siswa');
     }
+  }
+
+  public function resetUjian(Request $request)
+  {
+    $jawab = Jawab::findorfail($request->id_ujian);
+    Jawab::where('id_soal', $jawab->id_soal)
+            ->where('id_user', $jawab->id_user)
+            ->where('id_kelas', $jawab->id_kelas)
+            ->delete();
+    $siswa = User::findorfail($jawab->id_user);
+    $aktifitas = new Aktifitas;
+    $aktifitas->id_user = Auth::user()->id;
+    $aktifitas->nama = 'Mereset data nilai siswa atas nama: '.$siswa->nama;
+    $aktifitas->save();
   }
 }
