@@ -306,7 +306,7 @@
 		// ubah status jawab soal
 		$('#kirim').click(function() {
 			$('#confirm').html(`
-				<p>Yakin jawaban kamu akan dikirimkan sekarang? Kamu masih mempunyai waktu `+Math.floor(seconds/60)+` menit.<p>
+				<p>Yakin jawaban kamu akan dikirimkan sekarang? Kamu masih mempunyai waktu `+Math.floor(seconds/60)+` menit. Setelah mengirimkan jawaban, kamu tidak bisa kembali memeriksa jawaban.<p>
   			<button type="button" class="btn" id="batal" style="background-image: linear-gradient(to right, #f31515 , #c12704); border: none; color: #fff;"><i class="fa fa-ban" aria-hidden="true"></i> Tidak! Saya Mau Cek Lagi.</button>
   			<button type="button" class="btn" id="kirim-jawaban" data-id="{{ $soal->id }}" style="background-image: linear-gradient(to right, #1523f3 , #0495c1); border: none; color: #fff;"><i class="fa fa-check-circle" aria-hidden="true"></i> Iya! Saya Kirim Jawaban Saya Sekarang.</button>
 			`).show();

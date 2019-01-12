@@ -42,9 +42,16 @@ git clone https://github.com/wisnuvb/tixam.git
 ```
 
 Tunggu sampai file selesai di clone ke folder htdocs server Anda, lalu masuk ke folder <b>tixam</b> yang barusan Anda clone. Kemudian ketikan :
+
+```
+composer install
+php artisan key:generate
+```
+
+Atau apabila anda telah melakukan instalasi sebelumnya silahkan update composer dengan ketikan script dibawah ini:
+
 ```
 composer update --verbose --profile --prefer-dist
-php artisan key:generate
 ```
 
 Buka browser dan ketikan url http://localhost/phpmyadmin. Lalu buat database baru dengan nama <b>tixam</b>. Setelah itu ketikan script berikut pada command promt:
