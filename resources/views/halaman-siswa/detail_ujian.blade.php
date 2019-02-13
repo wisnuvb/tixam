@@ -71,7 +71,7 @@
 			<p style="padding-top: 8px; padding-left: 15px; font-weight: bold;">Ti-Xam | Tipamedia Apps for Education</p>
 		</div>
   	<div class="col-sm-9">
-  		<div class="box box-primary color-palette-box">
+  		<div class="box box-primary color-palette-box" style="overflow-y: scroll;">
         <div class="box-header with-border">
           <h3 class="box-title">
           	Soal No:
