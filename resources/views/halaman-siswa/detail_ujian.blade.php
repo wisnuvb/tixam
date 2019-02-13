@@ -66,7 +66,7 @@
   </div>
 
   <!-- tampilkan soal disini -->
-  <div id="specialstuff" class="row" style="display: none;">
+  <div id="specialstuff" class="row" style="display: none; overflow-y: scroll !important;">
 		<div style="height: 40px; background: #0419d0; color: #fff; margin-bottom: 10px">
 			<p style="padding-top: 8px; padding-left: 15px; font-weight: bold;">Ti-Xam | Tipamedia Apps for Education</p>
 		</div>
@@ -355,18 +355,7 @@
 					console.log(data);
 				}
 			})
-
-			// console.log("tixam"+paket_soal+"{{ Auth::user()->id }}");
-			// if (localStorage.getItem("tixam"+paket_soal+"{{ Auth::user()->id }}") === null) {
-			// 	jawab.push({get_jawab, get_jawab});
-			// 	localStorage.setItem("tixam"+paket_soal+"{{ Auth::user()->id }}", JSON.stringify(jawab))
-			// }else{
-			// 	var jawab_lokal = localStorage.getItem("tixam"+paket_soal+"{{ Auth::user()->id }}");
-			// 	console.log(JSON.stringify(jawab_lokal));
-			// 	console.log(jawab);
-			// 	console.log(JSON.stringify(jawab_lokal).includes(JSON.stringify(jawab)));
-			// }
-			// console.log(get_jawab);
+			
 		});
 	});
 
