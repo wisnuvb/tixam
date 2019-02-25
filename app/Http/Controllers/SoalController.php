@@ -99,10 +99,11 @@ class SoalController extends Controller
       $user = User::where('id', Auth::user()->id)->first();
       $soal = Soal::where('id', $request->id)->first();
       $soals = Detailsoal::where('id_soal', $request->id)->get();
-      $kelas = Kelas::leftjoin('distribusisoals', 'kelas.id', '=', 'distribusisoals.id_kelas')
+      $kelas = Kelas::join('distribusisoals', 'kelas.id', '=', 'distribusisoals.id_kelas')
                       ->select('distribusisoals.id_soal', 'kelas.*')
                       ->orderBy('kelas.id', 'ASC')
                       ->get();
+      // $kelas = Kelas::get();
       return view('soal.detail', compact('user', 'soal', 'soals', 'kelas', 'id_soal'));
     }else{
       return redirect()->route('home.index');
