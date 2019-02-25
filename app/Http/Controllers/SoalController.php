@@ -17,6 +17,7 @@ use App\Models\Materi;
 use App\Models\Detailsoal;
 use App\Models\Kelas;
 use App\Models\Aktifitas;
+use App\Models\Distribusisoal;
 
 class SoalController extends Controller
 {
@@ -99,11 +100,15 @@ class SoalController extends Controller
       $user = User::where('id', Auth::user()->id)->first();
       $soal = Soal::where('id', $request->id)->first();
       $soals = Detailsoal::where('id_soal', $request->id)->get();
-      $kelas = Kelas::join('distribusisoals', 'kelas.id', '=', 'distribusisoals.id_kelas')
-                      ->select('distribusisoals.id_soal', 'kelas.*')
-                      ->orderBy('kelas.id', 'ASC')
-                      ->get();
-      // $kelas = Kelas::get();
+      $cekDistribusisoal = Distribusisoal::get();
+      if (count($cekDistribusisoal) > 0) {
+        $kelas = Kelas::join('distribusisoals', 'kelas.id', '=', 'distribusisoals.id_kelas')
+                        ->select('distribusisoals.id_soal', 'kelas.*')
+                        ->orderBy('kelas.id', 'ASC')
+                        ->get();
+      }else{
+        $kelas = Kelas::get();
+      }
       return view('soal.detail', compact('user', 'soal', 'soals', 'kelas', 'id_soal'));
     }else{
       return redirect()->route('home.index');
