@@ -102,9 +102,10 @@ class SoalController extends Controller
       $soals = Detailsoal::where('id_soal', $request->id)->get();
       $cekDistribusisoal = Distribusisoal::get();
       if (count($cekDistribusisoal) > 0) {
-        $kelas = Kelas::join('distribusisoals', 'kelas.id', '=', 'distribusisoals.id_kelas')
+        $kelas = Kelas::leftjoin('distribusisoals', 'kelas.id', '=', 'distribusisoals.id_kelas')
                         ->select('distribusisoals.id_soal', 'kelas.*')
                         ->orderBy('kelas.id', 'ASC')
+                        ->groupBy('kelas.id')
                         ->get();
       }else{
         $kelas = Kelas::get();
