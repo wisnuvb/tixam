@@ -9,7 +9,6 @@
 @endsection
 @section('content')
 <div class="col-md-8">
-  <!-- Horizontal Form -->
   <div class="box box-default">
     <!-- <div class="box-header with-border">
       <h3 class="box-title">Pengaturan</h3>
