@@ -81,13 +81,13 @@
 							@endforeach
 						@endif
           </h3>
-          <div class="box-tools pull-right" style="width: 350px;">
+          <!-- <div class="box-tools pull-right" style="width: 350px;">
           	<p style="margin: 2px;" class="pull-right">
 	          	<span id="info-waktu" style="display: none; color: #f00; margin-right: 25px"></span>
           		Sisa waktu
 	          	<span id="countdown" class="timer"></span>
           	</p>
-          </div>
+          </div> -->
         </div>
         <div class="box-body">
 					<div id="wrap-soal">
@@ -246,28 +246,28 @@
 <!-- <script src="{{ url('js/script.js') }}"></script> -->
 <script src="{{ url('assets/dist/js/sweetalert2.all.min.js') }}"></script>
 <script>
-	var upgradeTime = "{{ $soal->waktu*60 }}";
-	var seconds = upgradeTime;
-	function timer() {
-	  var days        = Math.floor(seconds/24/60/60);
-	  var hoursLeft   = Math.floor((seconds) - (days*86400));
-	  var hours       = Math.floor(hoursLeft/3600);
-	  var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
-	  var minutes     = Math.floor(minutesLeft/60);
-	  var remainingSeconds = seconds % 60;
-	  if (remainingSeconds < 10) {
-	      remainingSeconds = "0" + remainingSeconds; 
-	  }
-	  document.getElementById('countdown').innerHTML = hours + " : " + minutes + " : " + remainingSeconds;
-	  if (seconds == 300) {
-	  	$('#info-waktu').html('Ujian tinggal <b>5</b> menit').show();
-	  	seconds--;
-	  } else if(seconds == 0) {
-	  	clearInterval(countdownTimer);
-	  } else {
-	    seconds--;
-	  }
-	}
+	// var upgradeTime = "{{ $soal->waktu*60 }}";
+	// var seconds = upgradeTime;
+	// function timer() {
+	//   var days        = Math.floor(seconds/24/60/60);
+	//   var hoursLeft   = Math.floor((seconds) - (days*86400));
+	//   var hours       = Math.floor(hoursLeft/3600);
+	//   var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+	//   var minutes     = Math.floor(minutesLeft/60);
+	//   var remainingSeconds = seconds % 60;
+	//   if (remainingSeconds < 10) {
+	//       remainingSeconds = "0" + remainingSeconds; 
+	//   }
+	//   document.getElementById('countdown').innerHTML = hours + " : " + minutes + " : " + remainingSeconds;
+	//   if (seconds == 300) {
+	//   	$('#info-waktu').html('Ujian tinggal <b>5</b> menit').show();
+	//   	seconds--;
+	//   } else if(seconds == 0) {
+	//   	clearInterval(countdownTimer);
+	//   } else {
+	//     seconds--;
+	//   }
+	// }
 
 	$(document).bind("fullscreenchange", function(e) {
 		if ($(document).fullScreen()) {
@@ -305,8 +305,13 @@
 
 		// ubah status jawab soal
 		$('#kirim').click(function() {
+			// $('#confirm').html(`
+			// 	<p>Yakin jawaban kamu akan dikirimkan sekarang? Kamu masih mempunyai waktu `+Math.floor(seconds/60)+` menit. Setelah mengirimkan jawaban, kamu tidak bisa kembali memeriksa jawaban.<p>
+  	// 		<button type="button" class="btn" id="batal" style="background-image: linear-gradient(to right, #f31515 , #c12704); border: none; color: #fff;"><i class="fa fa-ban" aria-hidden="true"></i> Tidak! Saya Mau Cek Lagi.</button>
+  	// 		<button type="button" class="btn" id="kirim-jawaban" data-id="{{ $soal->id }}" style="background-image: linear-gradient(to right, #1523f3 , #0495c1); border: none; color: #fff;"><i class="fa fa-check-circle" aria-hidden="true"></i> Iya! Saya Kirim Jawaban Saya Sekarang.</button>
+			// `).show();
 			$('#confirm').html(`
-				<p>Yakin jawaban kamu akan dikirimkan sekarang? Kamu masih mempunyai waktu `+Math.floor(seconds/60)+` menit. Setelah mengirimkan jawaban, kamu tidak bisa kembali memeriksa jawaban.<p>
+				<pSetelah mengirimkan jawaban, kamu tidak bisa kembali memeriksa jawaban.<p>
   			<button type="button" class="btn" id="batal" style="background-image: linear-gradient(to right, #f31515 , #c12704); border: none; color: #fff;"><i class="fa fa-ban" aria-hidden="true"></i> Tidak! Saya Mau Cek Lagi.</button>
   			<button type="button" class="btn" id="kirim-jawaban" data-id="{{ $soal->id }}" style="background-image: linear-gradient(to right, #1523f3 , #0495c1); border: none; color: #fff;"><i class="fa fa-check-circle" aria-hidden="true"></i> Iya! Saya Kirim Jawaban Saya Sekarang.</button>
 			`).show();
@@ -333,7 +338,7 @@
 		var detail_soal_id = [];
 		
 		$("#start-exam").click(function(){
-			var countdownTimer = setInterval('timer()', 1000);
+			// var countdownTimer = setInterval('timer()', 1000);
 			$("#specialstuff").show();
 		});
 
