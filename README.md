@@ -10,12 +10,14 @@ Hingga saat ini masih aktif digunakan oleh beberapa sekolah di Indonesia.
 
 Aplikasi ini dibangun diatas Framework <a href="https://laravel.com/docs/5.5" target="_blank" title="silahkan buka di tab baru, dengan klik kanan atau klik CTRL + clik">Laravel 5.4</a> dan MySQL versi 5. Sebelum menjalankan aplikasi ini, silahkan disiapkan terlebih dahulu beberapa software dan ekstension berikut:
 
-- PHP >= 7.1.0
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
+- PHP versi 7.1.0 keatas
+  - OpenSSL PHP Extension
+  - PDO PHP Extension
+  - Mbstring PHP Extension
+  - Tokenizer PHP Extension
+  - XML PHP Extension
+- MySQL
+- Browser (lebih direkomendasikan Chrome versi 60 keatas
 
 Anda dapat menggunakan beberapa paket yang siap pakai untuk mempersingkat proses instalasi aplikasi ini.
 
@@ -34,21 +36,21 @@ Untuk gitbash silahkan download <a href="https://git-scm.com/download/win" targe
 
 Silahkan instal composer dan git bash di komputer server Anda. Setelah semua berhasil diinstal dengan benar kita bisa mulai clone aplikasi ini ke komputer kita.
 
-Buka command promt lalu arahkan ke folder htdocs (ada didalam folder xampp, misal Anda menginstal di C. Berarti Anda harus ke folder C:\\xampp\htdocs).
+Buka command prompt (gitbash) lalu arahkan ke folder htdocs (ada didalam folder xampp, misal Anda menginstal di C. Berarti Anda harus ke folder C:\\xampp\htdocs).
 
 Setelah itu ketikan:
 ```
 git clone https://github.com/wisnuvb/tixam.git
 ```
 
-Tunggu sampai file selesai di clone ke folder htdocs server Anda, lalu masuk ke folder <b>tixam</b> yang barusan Anda clone. Kemudian ketikan :
+Tunggu sampai file selesai di clone ke folder htdocs server Anda, lalu masuk ke folder <b>tixam</b> dengan mengetikan (```cd tixam```) pada command prompt (gitbash) Anda, lalu ketikan :
 
 ```
 composer install
 php artisan key:generate
 ```
 
-Atau apabila anda telah melakukan instalasi sebelumnya silahkan update composer dengan ketikan script dibawah ini:
+Atau apabila anda telah melakukan instalasi sebelumnya silahkan update composer dengan ketikan script dibawah ini (opsi ini hanya digunakan apabila terdapat update aplikasi, saat instalasi awal tidak diperlukan menggunakan script ini karena akan memakan waktu cukup lama):
 
 ```
 composer update --verbose --profile --prefer-dist
@@ -68,4 +70,4 @@ Untuk login sebagai guru silahkan gunakan email: <b>admin@ayosinau.com</b>, pass
 
 Aplikasi ini bersifat terbuka, siapapun dipersilahkan untuk menjadi kontributor untuk meningkatkan kualitas aplikasi ini.
 
-Buat yang telah berhasil menggunakan, jangan lupa untuk kasih bintang ya...
+Buat yang telah berhasil menggunakan, jangan lupa untuk kasih bintang ya supaya aplikasi kita ini semakin dikenal luas dan membawa manfaat lebih banyak lagi bagi dunia pendidikan kita.
