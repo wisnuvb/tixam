@@ -66,6 +66,8 @@ Setelah proses diatas berhasil dilalui tanpa hambatan, silahkan akses di browser
 
 Untuk login sebagai guru silahkan gunakan email: <b>admin@ayosinau.com</b>, password: <b>secret</b>
 
+[![TiXam Video Installation](https://img.youtube.com/vi/3IblPpFb0_Y/0.jpg)](https://www.youtube.com/watch?v=3IblPpFb0_Y)
+
 ## Info Tambahan
 
 Aplikasi ini bersifat terbuka, siapapun dipersilahkan untuk menjadi kontributor untuk meningkatkan kualitas aplikasi ini.
