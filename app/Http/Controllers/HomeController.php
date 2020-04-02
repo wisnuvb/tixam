@@ -11,6 +11,9 @@ use App\Models\Materi;
 use App\Models\Aktifitas;
 use App\Models\Detailsoal;
 use App\Models\School;
+use Carbon\Carbon;
+
+Carbon::setLocale('id');
 
 class HomeController extends Controller
 {

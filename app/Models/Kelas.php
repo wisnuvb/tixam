@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Kelas extends Model
@@ -10,15 +11,15 @@ class Kelas extends Model
 
   public function distribusisoal()
   {
-  	return $this->belongsTo('App\Models\Distribusisoal', 'id_kelas', 'id');
+    return $this->belongsTo('App\Models\Distribusisoal', 'id_kelas', 'id');
   }
   public function soal()
   {
-  	return $this->belongsTo('App\Models\Soal', 'id_user');
+    return $this->belongsTo('App\Models\Soal', 'id_user');
   }
   public function kelas()
   {
-  	return $this->belongsTo('App\Models\Kelas', 'id_kelas');
+    return $this->belongsTo('App\Models\Kelas', 'id_kelas');
   }
   public function wali()
   {
@@ -26,6 +27,6 @@ class Kelas extends Model
   }
   public function siswa()
   {
-    return $this->hasMany('App\User', 'id', 'id_kelas');
+    return $this->hasMany(User::class, 'id_kelas', 'id')->where('status', 'S');
   }
 }

@@ -24,7 +24,7 @@ Route::group(['prefix' => 'crud'], function(){
 	Route::post('hapus-gambar-materi', 'CrudController@hapusGambarMateri');
 	Route::post('simpan-gambar-user', 'CrudController@simpanGambarUser');
 	Route::post('update-profil-sekolah', 'CrudController@updateProfilSekolah');
-	Route::post('simpan-guru', 'CrudController@simpanGuru');
+	Route::post('simpan-guru', 'GuruController@simpanGuru');
 	Route::post('simpan-siswa', 'CrudController@simpanSiswa');
 	Route::post('update-siswa', 'CrudController@updateSiswa');
 	Route::post('simpan-siswa-via-excel', 'CrudController@simpanSiswaViaExcel');

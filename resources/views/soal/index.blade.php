@@ -51,25 +51,25 @@
             <div class="form-group">
               <label for="paket" class="col-sm-2 control-label">Paket</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" name="paket" placeholder="Nama paket">
+                <input type="text" class="form-control" name="paket" placeholder="Tryout Bahasa Indonesia Kelas XIB">
               </div>
             </div>
             <div class="form-group">
               <label for="paket" class="col-sm-2 control-label">Deskripsi</label>
               <div class="col-sm-8">
-                <textarea name="deskripsi" class="form-control" placeholder="Deskripsi"></textarea>
+                <textarea name="deskripsi" class="form-control" placeholder="Tryout dengan lingkup materi: Mengidentifikasi Informasi dalam Teks Ekplanasi"></textarea>
               </div>
             </div>
             <div class="form-group">
               <label for="kkm" class="col-sm-2 control-label">KKM</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control numOnly" data-toggle="tooltip" title="Hanya menerima inputan dalam format numerik" name="kkm" placeholder="KKM">
+                <input type="text" class="form-control numOnly" data-toggle="tooltip" title="Nilai Kriteria Ketuntasan Minimal (KKM)" name="kkm" placeholder="70">
               </div>
             </div>
             <div class="form-group">
               <label for="waktu" class="col-sm-2 control-label">Waktu</label>
               <div class="col-sm-2">
-                <input type="text" class="form-control numOnly" data-toggle="tooltip" title="Masukan waktu ujian dalam satuan menit" name="waktu" placeholder="Waktu">
+                <input type="text" class="form-control numOnly" data-toggle="tooltip" title="Masukan waktu ujian dalam satuan menit" name="waktu" placeholder="60">
               </div>
             </div>
             <div class="form-group">
