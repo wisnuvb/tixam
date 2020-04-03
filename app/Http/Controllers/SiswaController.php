@@ -174,7 +174,8 @@ class SiswaController extends Controller
     $check_soal = Distribusisoal::where('id_soal', $id)->where('id_kelas', auth()->user()->id_kelas)->first();
     if ($check_soal) {
       $soal = Soal::where('id', $id)->first();
-      $soals = Detailsoal::where('id_soal', $id)->where('status', 'Y')->inRandomOrder()->get();
+      // $soals = Detailsoal::where('id_soal', $id)->where('status', 'Y')->inRandomOrder()->get();
+      $soals = Detailsoal::where('id_soal', $id)->where('status', 'Y')->get();
       return view('halaman-siswa.detail_ujian', compact('soal', 'soals'));
     } else {
       return redirect()->route('home.index');
