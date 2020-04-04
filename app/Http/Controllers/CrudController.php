@@ -354,7 +354,7 @@ class CrudController extends Controller
             $query->status = 'S';
             $query->status_sekolah = 'Y';
             $query->email = trim(strtolower($value['no_induk'])) . '@ayosinau.com';
-            $query->password = bcrypt($value['nisn']);
+            $query->password = bcrypt(123456);
             if ($query->save()) {
               $sukses = $sukses + 1;
             }
