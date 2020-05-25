@@ -46,7 +46,7 @@ git clone https://github.com/wisnuvb/tixam.git
 Tunggu sampai file selesai di clone ke folder htdocs server Anda, lalu masuk ke folder <b>tixam</b> dengan mengetikan (```cd tixam```) pada command prompt (gitbash) Anda, lalu ketikan :
 
 ```
-composer install
+composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 php artisan key:generate
 ```
 
