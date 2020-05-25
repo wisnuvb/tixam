@@ -22,4 +22,9 @@ class Soal extends Model
   {
     return $this->hasMany('App\Models\Detailsoal', 'id_soal');
   }
+
+  public function detail_soal_essays()
+  {
+    return $this->hasMany(DetailSoalEssay::class, 'id_soal', 'id');
+  }
 }

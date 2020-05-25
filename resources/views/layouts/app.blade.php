@@ -321,7 +321,8 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src="{{ url('/assets/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+<!-- <script src="{{ url('/assets/plugins/jQuery/jquery-2.2.3.min.js') }}"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ url('/js/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -330,17 +331,7 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ url('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
-<!-- Morris.js charts -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="{{ url('/assets/plugins/morris/morris.min.js') }}"></script> -->
-<!-- Sparkline -->
-<!-- <script src="{{ url('/assets/plugins/sparkline/jquery.sparkline.min.js') }}"></script> -->
-<!-- jvectormap -->
-<!-- <script src="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script> -->
-<!-- <script src="{{ url('/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script> -->
-<!-- jQuery Knob Chart -->
-<!-- <script src="{{ url('/assets/plugins/knob/jquery.knob.js') }}"></script> -->
-<!-- daterangepicker -->
+
 <script src="{{ url('/assets/dist/js/moment.min.js') }}"></script>
 <script src="{{ url('/assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- datepicker -->

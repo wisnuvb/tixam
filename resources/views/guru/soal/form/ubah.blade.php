@@ -4,7 +4,7 @@
   <h1>Dashboard</h1>
   <ol class="breadcrumb">
     <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
-    <li><a href="{{ url('/soal') }}">Soal</a></li>
+    <li><a href="{{ url('/elearning/soal') }}">Soal</a></li>
     <li class="active">Ubah paket soal</li>
   </ol>
 @endsection

@@ -161,33 +161,32 @@ class SiswaController extends Controller
     $user = User::where('id', auth()->user()->id)->first();
     return view('halaman-siswa.materi', compact('user'));
   }
-  
+
   public function ujian()
   {
     $user = User::where('id', auth()->user()->id)->first();
     $pakets = Distribusisoal::where('id_kelas', auth()->user()->id_kelas)->get();
     return view('halaman-siswa.ujian', compact('user', 'pakets'));
   }
-  
+
   public function detailUjian($id)
   {
     $check_soal = Distribusisoal::where('id_soal', $id)->where('id_kelas', auth()->user()->id_kelas)->first();
     if ($check_soal) {
-      $soal = Soal::where('id', $id)->first();
-      // $soals = Detailsoal::where('id_soal', $id)->where('status', 'Y')->inRandomOrder()->get();
+      $soal = Soal::with('detail_soal_essays')->where('id', $id)->first();
       $soals = Detailsoal::where('id_soal', $id)->where('status', 'Y')->get();
       return view('halaman-siswa.detail_ujian', compact('soal', 'soals'));
     } else {
       return redirect()->route('home.index');
     }
   }
-  
+
   public function getSoal($id)
   {
     $soal = Detailsoal::find($id);
     return view('halaman-siswa.get_soal', compact('soal'));
   }
-  
+
   public function jawab(Request $request)
   {
     $get_jawab = explode('/', $request->get_jawab);
@@ -260,5 +259,10 @@ class SiswaController extends Controller
       }
     }
     User::where('status', 'S')->delete();
+  }
+
+  public function getDetailEssay(Request $request)
+  {
+    return $request;
   }
 }

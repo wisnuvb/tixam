@@ -134,7 +134,7 @@
     </div>
   @else
     <div class="alert" style="background: #fff; border: solid thin #d8d5d5;">
-      <p>Hai {{ Auth::user()->nama }}, Selamat datang di TiXam. Disini kamu bisa temukan materi yang telah disiapkan oleh Guru, kerjakan soal latihan dan ujian.</p>
+      <p>Hai {{ Auth::user()->nama }}, Selamat datang di TiXam. Disini kamu bisa temukan materi yang telah disiapkan oleh Guru serta mengerjakan soal latihan dan ujian.</p>
       <p>Pantau perkembangan kamu dengan melihat nilai-nilai latihan dan ujian dengan cepat.</p>
       <p>Apabila ada hal yang kurang dipahami, bisa ditanyakan kepada Guru atau operator sekolah yang mengelola aplikasi ini.</p>
     </div>

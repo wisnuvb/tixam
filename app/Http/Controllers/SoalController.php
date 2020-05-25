@@ -313,4 +313,9 @@ class SoalController extends Controller
       return redirect()->route('soal');
     }
   }
+
+  public function saveEssay(Request $request)
+  {
+    return $request;
+  }
 }
