@@ -161,17 +161,17 @@ class LaporanController extends Controller
     $detailSoal = Detailsoal::where('id_soal', $request->soal)->get();
     $jawabs = Jawab::where('id_soal', $request->soal)->where('id_kelas', $request->kelas)
       ->groupBy('id_user')->get();
-
+    $soal_essay = DetailSoalEssay::where('id_soal', $request->soal)->get();
     // return view('laporan.excel.excel_hasil_ujian_perkelas', compact('jawabs', 'soal', 'kelas', 'detailSoal'));
 
-    Excel::create('Nilai Kelas ' . $kelas->nama, function ($excel) use ($jawabs, $soal, $kelas, $detailSoal) {
-      $excel->sheet('New sheet', function ($sheet) use ($jawabs, $soal, $kelas, $detailSoal) {
+    Excel::create('Nilai Kelas ' . $kelas->nama, function ($excel) use ($jawabs, $soal, $kelas, $detailSoal, $soal_essay) {
+      $excel->sheet('New sheet', function ($sheet) use ($jawabs, $soal, $kelas, $detailSoal, $soal_essay) {
         $sheet->setStyle(array(
           'font' => array(
             'size' =>  12,
           )
         ));
-        $sheet->loadView('laporan.excel.excel_hasil_ujian_perkelas', compact('jawabs', 'soal', 'kelas', 'detailSoal'));
+        $sheet->loadView('laporan.excel.excel_hasil_ujian_perkelas', compact('jawabs', 'soal', 'kelas', 'detailSoal', 'soal_essay'));
       });
     })->download('xlsx');
   }
