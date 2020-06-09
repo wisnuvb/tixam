@@ -19,6 +19,7 @@
 	.benar {
 		background: #e5f9e9;
 		color: #1d231e;
+		padding: 10px 15px 0 15px;
 	}
 	.salah {
 		background: #f9f1ed;
@@ -57,7 +58,7 @@
 	@foreach($jawabs as $jawab)
 	<tr>
 		<td style="width: 25px">{{ $no++ }}</td>
-		<td>{{ $jawab->detailSoal->soal }}</td>
+		<td>{!! $jawab->detailSoal->soal !!}</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>

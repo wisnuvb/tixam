@@ -1,16 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group(['prefix' => 'elearning'], function () {
-	Route::group(['prefix' => 'soal'], function () {
-		Route::get('ubah/{id}', 'SoalController@ubahSoal')->name('soal.ubah');
-	});
-});
 
 // reute group for crud
 Route::group(['prefix' => 'crud'], function () {
@@ -85,6 +82,7 @@ Route::group(['prefix' => 'elearning'], function () {
 	});
 	Route::group(['prefix' => 'soal'], function () {
 		Route::get('/', 'SoalController@index')->name('soal');
+		Route::get('/ubah/{id}', 'SoalController@ubahSoal')->name('soal.ubah');
 		Route::get('/detail/{id}', 'SoalController@detail')->name('elearning.detail-soal');
 		Route::get('/get-soal', 'SoalController@dataSoal')->name('elearning.get-soal');
 		Route::get('/get-soal-home', 'SoalController@dataSoalHome')->name('elearning.get-soal-home');
@@ -92,6 +90,7 @@ Route::group(['prefix' => 'elearning'], function () {
 		Route::get('/detail/ubah/{id}', 'SoalController@ubahDetailSoal')->name('elearning.ubah-detail-soal');
 		Route::get('/detail/data-soal/{id}', 'SoalController@detailDataSoal')->name('elearning.detail-data-soal');
 		Route::get('/essay/data', 'DetailSoalEssayController@data');
+		Route::get('/essay/simpan-score', 'JawabController@simpanScore');
 		Route::resource('/essay', 'DetailSoalEssayController');
 	});
 });
@@ -110,6 +109,7 @@ Route::group(['prefix' => 'siswa'], function () {
 	Route::get('materi', 'SiswaController@materi');
 	Route::get('ujian', 'SiswaController@ujian');
 	Route::get('ujian/get-detail-essay', 'SiswaController@getDetailEssay');
+	Route::get('ujian/simpan-jawaban-essay', 'SiswaController@simpanJawabanEssay');
 	Route::get('ujian/detail/{id}', 'SiswaController@detailUjian');
 	Route::get('ujian/finish/{id}', 'SiswaController@finishUjian');
 	Route::get('ujian/get-soal/{id}', 'SiswaController@getSoal');

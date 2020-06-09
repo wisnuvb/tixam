@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Datatables;
+// use Datatables;
 use DB;
 use Excel;
 use PDF;
@@ -14,6 +14,11 @@ use App\Models\Jawab;
 use App\Models\Soal;
 use App\Models\Kelas;
 use App\Models\Detailsoal;
+use App\Models\DetailSoalEssay;
+use App\Models\JawabEsay;
+// use Barryvdh\DomPDF\PDF;
+// use Maatwebsite\Excel\Facades\Excel;
+use Yajra\Datatables\Facades\Datatables;
 
 class LaporanController extends Controller
 {
@@ -112,7 +117,15 @@ class LaporanController extends Controller
         ->where('jawabs.id_user', $request->id_user)
         ->where('jawabs.id_soal', $request->id_soal)
         ->first();
-      return view('laporan.detailSiswa', compact('user', 'siswa', 'hasil_ujian', 'soal'));
+      $soal_essay = DetailSoalEssay::where('id_soal', $request->id_soal)->get();
+      $nilai_essay = 0;
+      if ($soal_essay->count() > 0) {
+        foreach ($soal_essay as $essay) {
+          $nilai_essay = $nilai_essay + ($essay->getJawab->score ?? 0);
+        }
+      }
+
+      return view('laporan.detailSiswa', compact('user', 'siswa', 'hasil_ujian', 'soal', 'soal_essay', 'nilai_essay'));
     } else {
       return redirect()->route('home.index');
     }
@@ -138,6 +151,7 @@ class LaporanController extends Controller
           return 'No have question';
         }
       })
+      ->rawColumns(['dataSoal'])
       ->make(true);
   }
   public function excelHasilUjianPerkelas(Request $request)

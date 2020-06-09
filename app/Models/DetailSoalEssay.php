@@ -8,6 +8,11 @@ class DetailSoalEssay extends Model
 {
   protected $table = 'detail_soal_esays';
 
+  public function getJawab()
+  {
+    return $this->hasOne(JawabEsay::class, 'id_detail_soal_esay', 'id');
+  }
+
   public function saveEssay($request)
   {
     $save = new DetailSoalEssay;

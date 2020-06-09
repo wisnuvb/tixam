@@ -17,6 +17,8 @@ use App\Models\Materi;
 use App\Models\Kelas;
 use App\Models\Distribusisoal;
 use App\Models\Detailsoal;
+use App\Models\DetailSoalEssay;
+use App\Models\JawabEsay;
 
 class SiswaController extends Controller
 {
@@ -263,6 +265,26 @@ class SiswaController extends Controller
 
   public function getDetailEssay(Request $request)
   {
-    return $request;
+    $soal_essay = DetailSoalEssay::find($request->id_soal_esay);
+    return view('halaman-siswa.get_soal_essay', compact('soal_essay'));
+  }
+
+  public function simpanJawabanEssay(Request $request)
+  {
+    if ($request->jawab_essay == '' || $request->jawab_essay == null) {
+      return '';
+    }
+    $check_jawaban = JawabEsay::where('id_user', auth()->user()->id)->where('id_detail_soal_esay', $request->id_soal_esay)->first();
+    if (!$check_jawaban) {
+      $save = new JawabEsay;
+      $save->id_detail_soal_esay = $request->id_soal_esay;
+      $save->id_user = auth()->user()->id;
+    } else {
+      $save = $check_jawaban;
+    }
+    $save->jawab = $request->jawab_essay;
+    if ($save->save()) {
+      return 1;
+    }
   }
 }

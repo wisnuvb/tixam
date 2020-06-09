@@ -17,7 +17,8 @@ class CreateJawabEssays extends Migration
             $table->increments('id');
             $table->integer('id_detail_soal_esay');
             $table->integer('id_user');
-            $table->longText('soal');
+            $table->longText('jawab');
+            $table->decimal('score');
             $table->timestamps();
         });
     }

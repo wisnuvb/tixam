@@ -531,8 +531,12 @@
     });
 
     $("#btn-soal-essay").click(function() {
-      $("#form-essay").show();
+      $("#form-essay").slideToggle();
     });
+
+    $("#batal-simpan-essay").click(function(){
+      $("#form-essay").slideUp();
+    })
 
     let table_soal_essay = $("#table_detail_soal_essay").DataTable({
       processing: true,

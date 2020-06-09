@@ -176,7 +176,7 @@
 				<span>Nomor Soal Essay</span>
 				<nav aria-label="Page navigation">
 					<ul class="pagination" style="margin-top: 5px !important;">
-						@foreach($soal->detail_soal_essays as $key_number=>$data_number)
+						@foreach($soal->detail_soal_essays as $key_number => $data_number)
 						<li class="no_soal_essay" id="{{ 'nav'.$data_number->id }}" data-id="{{ $data_number->id }}" data-no="{{ $key_number+1 }}"><a href="#">{{ $key_number+1 }}</a></li>
 						@endforeach
 					</ul>
@@ -242,7 +242,7 @@
 @endpush
 @push('scripts')
 <script src="{{ url('js/jquery.fullscreen-min.js') }}"></script>
-<script src="{{ url('assets/dist/js/sweetalert2.all.min.js') }}"></script>
+<!-- <script src="{{ url('assets/dist/js/sweetalert2.all.min.js') }}"></script> -->
 <script>
 	$(document).bind("fullscreenchange", function(e) {
 		if ($(document).fullScreen()) {
@@ -258,24 +258,44 @@
 		if (typeof(Storage) !== "undefined") {
 			// console.log('browser support localstorage');
 		} else {
-			swal(
-				'Update Browser!',
-				'Browser tidak support untuk proses ujian ini!',
-				'warning'
-			)
+			// swal(
+			// 	'Update Browser!',
+			// 	'Browser tidak support untuk proses ujian ini!',
+			// 	'warning'
+			// )
 		}
 
 		$(document).on('click', '.no_soal_essay', function() {
 			const id_soal_esay = $(this).data('id');
 			$.ajax({
-				url:"{{ url('siswa/ujian/get-detail-essay') }}",
-				type:"GET",
-				data:{id_soal_esay:id_soal_esay},
-				success:function(data){
-					console.log(data);
-					
+				url: "{{ url('siswa/ujian/get-detail-essay') }}",
+				type: "GET",
+				data: {
+					id_soal_esay: id_soal_esay
+				},
+				success: function(data) {
+					$("#wrap-soal").html(data);
 				}
 			});
+		});
+
+		$(document).on('click', '#simpan-essay', function() {
+			const jawab_essay = $("#jawab_essay").val();
+			const id_soal_esay = $(this).data('id');
+			$.ajax({
+				type: "GET",
+				url: "{{ url('siswa/ujian/simpan-jawaban-essay') }}",
+				data: {
+					jawab_essay: jawab_essay,
+					id_soal_esay: id_soal_esay
+				},
+				success: function(data) {
+					console.log(data);
+					if (data == 1) {
+						$("#notif-essay").html('Jawaban berhasil disimpan.').show();
+					}
+				}
+			})
 		});
 
 		$('.no_soal').click(function() {
