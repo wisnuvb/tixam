@@ -68,7 +68,7 @@ use Illuminate\Support\Facades\DB;
 				@if($soal_essay->count())
 				@foreach($soal_essay as $essay)
 				<?php
-					$nilai_essay = $nilai_essay + $essay->getJawab->score;
+					$nilai_essay = $nilai_essay + ($essay->getJawab->score ?? 0);
 				?>
 				@endforeach
 				@endif
