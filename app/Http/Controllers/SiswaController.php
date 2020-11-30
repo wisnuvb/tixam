@@ -265,7 +265,7 @@ class SiswaController extends Controller
 
   public function getDetailEssay(Request $request)
   {
-    $soal_essay = DetailSoalEssay::find($request->id_soal_esay);
+    $soal_essay = DetailSoalEssay::with('userJawab')->find($request->id_soal_esay);
     return view('halaman-siswa.get_soal_essay', compact('soal_essay'));
   }
 

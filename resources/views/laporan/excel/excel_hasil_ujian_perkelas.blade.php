@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Jawab;
+use Illuminate\Support\Facades\DB;
+
 ?>
 <table>
 	<tbody>
@@ -62,8 +64,8 @@ use App\Models\Jawab;
 			</td>
 			<td style="text-align: center;">{{ $soal_essay->count() }}</td>
 			<td style="text-align: center;">
-				@if($soal_essay->count())
 				<?php $nilai_essay = 0; ?>
+				@if($soal_essay->count())
 				@foreach($soal_essay as $essay)
 				<?php
 					$nilai_essay = $nilai_essay + $essay->getJawab->score;

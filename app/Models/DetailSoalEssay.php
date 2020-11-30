@@ -13,6 +13,11 @@ class DetailSoalEssay extends Model
     return $this->hasOne(JawabEsay::class, 'id_detail_soal_esay', 'id');
   }
 
+  public function userJawab()
+  {
+    return $this->hasOne(JawabEsay::class, 'id_detail_soal_esay', 'id')->where('id_user', auth()->user()->id);
+  }
+
   public function saveEssay($request)
   {
     $save = new DetailSoalEssay;
