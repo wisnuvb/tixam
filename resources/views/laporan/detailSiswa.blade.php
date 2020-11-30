@@ -104,10 +104,10 @@
 					@foreach($soal_essay as $essay)
 					<tr>
 						<td>{{ $no++ }}</td>
-						<td>{!! $essay->soal !!}</td>
-						<td>{!! $essay->getJawab->jawab !!}</td>
+						<td>{!! $essay->soal ?? '' !!}</td>
+						<td>{!! $essay->getJawab->jawab ?? '' !!}</td>
 						<td>
-							<input type="text" class="form-control text-center nilai-essay" data-id="{{ $essay->id }}" data-user="{{ $essay->getJawab->id_user }}" value="{{ $essay->getJawab->score }}" placeholder="{{ rand(40,99) }}">
+							<input type="text" class="form-control text-center nilai-essay" data-id="{{ $essay->id ?? 0 }}" data-user="{{ $essay->getJawab->id_user ?? 0 }}" value="{{ $essay->getJawab->score ?? '' }}" placeholder="{{ rand(40,99) }}">
 						</td>
 					</tr>
 					@endforeach
