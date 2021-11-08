@@ -62,7 +62,11 @@ php artisan migrate
 php artisan db:seed
 ```
 
-Setelah proses diatas berhasil dilalui tanpa hambatan, silahkan akses di browser url http://localhost/tixam/public untuk mengakses aplikasi ujian.
+Setelah proses diatas berhasil dilalui tanpa hambatan, silahkan akses di browser url http://localhost/tixam/public untuk mengakses aplikasi ujian atau juga http://localhost:8000 / http://127.0.0.1:8000 dengan menjalankan server via cmd.
+
+```
+php artisan serve
+```
 
 Untuk login sebagai guru silahkan gunakan email: <b>admin@ayosinau.com</b>, password: <b>secret</b>
 
