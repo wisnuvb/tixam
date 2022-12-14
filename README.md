@@ -1,4 +1,4 @@
-> Kami mengembangkan LMS untuk digitalisasi sekolah yang dapat dimanfaatkan secara GRATIS di <a href="https://oriviu.com" target="_blank">**Oriviu**</a>.
+> Kami mengembangkan LMS untuk digitalisasi sekolah yang dapat dimanfaatkan secara GRATIS tanpa perlu pusing memikirkan server di <a href="https://oriviu.com" target="_blank">**Oriviu**</a>.
 
 # Tixam
 Aplikasi Ujian Pilihan Ganda Berbasis Komputer
